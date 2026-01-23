@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>L'Orichalque</title>
+    <meta name="description" content="L'Orichalque — Insights & Strategy." />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+
+    <!-- Scripts -->
+    <script defer src="./js/global.js"></script>
+    <script defer src="./js/index-header-theme.js"></script>
+    <script defer src="./js/index-micro.js"></script>
+    <script defer src="./js/index-milestones.js"></script>
+    <script defer src="./js/index-diff.js"></script>
+  </head>
+
+  <body>
+    <!-- =========================================================
+         Header / Navigation (shared across pages)
+         - Desktop: inline navigation
+         - Mobile: hamburger + full-screen drawer
+         ========================================================= -->
+    <header class="site-header">
+      <div class="header-inner">
+        <!-- Mobile: menu toggle (hamburger / X) -->
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+        >
+          <span class="menu-toggle-lines" aria-hidden="true"></span>
+        </button>
+
+        <!-- Brand / Logo -->
+        <a class="brand" href="./index.html" aria-label="L'Orichalque Home">
+          <span class="brand-logo" aria-hidden="true"></span>
+        </a>
+
+        <!-- Mobile drawer navigation -->
+        <div class="mobile-drawer" id="mobileMenu" aria-hidden="true">
+          <nav class="nav nav--drawer" aria-label="Primary navigation">
+            <a class="nav-link" href="./about.html">About</a>
+            <a class="nav-link" href="./services.html">Services</a>
+            <a class="nav-link" href="./contact.html">Contact</a>
+          </nav>
+        </div>
+
+        <!-- Desktop navigation -->
+        <nav class="nav nav--desktop" aria-label="Primary navigation">
+          <a class="nav-link" href="./about.html">About</a>
+          <a class="nav-link" href="./services.html">Services</a>
+          <a class="nav-link" href="./contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- =========================================================
+         Home (scroll-snap)
+         - Each section defines header colors via data-* attributes.
+         - index-header-theme.js applies these values as CSS variables.
+         ========================================================= -->
+    <main class="snap-page" aria-label="Home page">
+      <!-- SECTION 1: Hero -->
+      <section
+        class="snap-section section-1"
+        aria-label="Hero"
+        data-brand="#e2360e"
+        data-nav="#726e75"
+        data-nav-hover="#121113"
+      >
+        <div class="section-inner hero">
+          <h1 class="hero-title">
+            Insights and advisory to make <span class="hero-accent">data driven</span> decisions.
+          </h1>
+
+          <p class="hero-subtitle">A global consultancy in strategy, insights and intelligence.</p>
+
+          <a class="cta cta--hero" href="./services.html">EXPLORE OUR SERVICES</a>
+
+          <!-- Decorative complement (masked SVG via CSS) -->
+          <span class="hero-complement" aria-hidden="true"></span>
+        </div>
+      </section>
+
+      <!-- SECTION 2: Milestones -->
+      <section
+        class="snap-section section-2"
+        aria-label="Milestones"
+        data-brand="#e3e3e3"
+        data-nav="#e3e3e3"
+        data-nav-hover="#121113"
+      >
+        <div class="section-inner milestones">
+          <div class="milestones-grid">
+            <article class="milestone">
+              <!-- Placeholder for future icon/animation -->
+              <div class="milestone-media" aria-hidden="true"></div>
+
+              <div class="milestone-content">
+                <h3 class="milestone-title"><span class="highlight">Global</span> Operations</h3>
+                <p class="milestone-text">International Reach - Active across all continents</p>
+              </div>
+            </article>
+
+            <article class="milestone">
+              <div class="milestone-media" aria-hidden="true"></div>
+
+              <div class="milestone-content">
+                <h3 class="milestone-title">
+                  <span class="highlight">15+ Years</span><br />
+                  in Strategy
+                </h3>
+                <p class="milestone-text">From small businesses to large corporations</p>
+              </div>
+            </article>
+
+            <article class="milestone">
+              <div class="milestone-media" aria-hidden="true"></div>
+
+              <div class="milestone-content">
+                <h3 class="milestone-title">
+                  Multi-Industry <span class="highlight">Expertise</span>
+                </h3>
+                <p class="milestone-text">Supply Chain, FMCG, Technology and more</p>
+              </div>
+            </article>
+
+            <article class="milestone">
+              <div class="milestone-media" aria-hidden="true"></div>
+
+              <div class="milestone-content">
+                <h3 class="milestone-title">
+                  Taylor-Made <span class="highlight">Solutions</span>
+                </h3>
+                <p class="milestone-text">To help your business achieve its full potential</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: Differentiator -->
+      <section
+        class="snap-section section-3"
+        aria-label="Differentiator"
+        data-brand="#e3e3e3"
+        data-nav="#e3e3e3"
+        data-nav-hover="#c6a15b"
+      >
+        <div class="section-inner differentiator">
+          <div class="diff-col diff-col--left">
+            <p class="kicker">Differentiator</p>
+            <h2 class="diff-title">Strategy applied to real business contexts.</h2>
+          </div>
+
+          <div class="diff-col diff-col--right">
+            <p class="diff-text">
+              We operate through a direct, responsible and customizable approach, combining
+              technology, market intelligence with global experience to support business's decisions
+              that demand clarity and precision.
+            </p>
+            <a class="cta cta--diff" href="./contact.html">CONTACT US</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER: auto-height snap section -->
+      <section class="snap-section snap-section--auto footer-section" aria-label="Footer section">
+        <footer class="site-footer" aria-label="Footer">
+          <div class="section-inner footer-inner">
+            <div class="footer-footnote">
+              <p class="footnote-text">
+                <span class="footnote-main">
+                  © 2026 L'Orichalque. All rights reserved. Developed by
+                </span>
+                <span class="footnote-studio"> Estúdio Bolachas</span>
+              </p>
+
+              <img
+                class="footnote-logo"
+                src="./assets/svg/logo-bolachas.svg"
+                alt="Estúdio Bolachas"
+              />
+            </div>
+          </div>
+        </footer>
+      </section>
+    </main>
+  </body>
+</html>

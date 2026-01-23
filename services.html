@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Meta -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services — L'Orichalque</title>
+    <meta name="description" content="Services — L'Orichalque." />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/services.css" />
+
+    <!-- Scripts -->
+    <script defer src="./js/global.js"></script>
+    <script defer src="./js/services-transition.js"></script>
+    <script defer src="./js/services-carousel.js"></script>
+    <script defer src="./js/services-micro.js"></script>
+  </head>
+
+  <body>
+    <!-- =========================================================
+         HEADER / NAVIGATION (shared)
+         ========================================================= -->
+    <header class="site-header">
+      <div class="header-inner">
+        <!-- Mobile hamburger -->
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+        >
+          <span class="menu-toggle-lines" aria-hidden="true"></span>
+        </button>
+
+        <!-- Brand -->
+        <a class="brand" href="./index.html" aria-label="L'Orichalque Home">
+          <span class="brand-logo" aria-hidden="true"></span>
+        </a>
+
+        <!-- Mobile drawer -->
+        <div class="mobile-drawer" id="mobileMenu" aria-hidden="true">
+          <nav class="nav nav--drawer" aria-label="Primary navigation">
+            <a class="nav-link" href="./about.html">About</a>
+            <a class="nav-link" href="./services.html" aria-current="page">Services</a>
+            <a class="nav-link" href="./contact.html">Contact</a>
+          </nav>
+        </div>
+
+        <!-- Desktop navigation -->
+        <nav class="nav nav--desktop" aria-label="Primary navigation">
+          <a class="nav-link" href="./about.html">About</a>
+          <a class="nav-link" href="./services.html" aria-current="page">Services</a>
+          <a class="nav-link" href="./contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- =========================================================
+         MAIN (scroll snap)
+         - Screen 1: hero
+         - Screen 2: carousel "stage"
+         - Overlay: expanding rail (fixed)
+         - Footer: auto-height snap section
+         ========================================================= -->
+    <main class="snap-page services-page" aria-label="Services page">
+      <!-- Screen 1: Hero -->
+      <section class="snap-section services-hero-screen" aria-label="Services hero">
+        <div class="section-inner services-inner">
+          <div class="services-hero">
+            <div class="services-hero-title">
+              <h1 class="services-title">Customizable Services</h1>
+            </div>
+
+            <div class="services-hero-text">
+              <p class="services-description">
+                Our services are designed to adapt to each business’s context, maturity and
+                objectives. We combine strategy, intelligence and global experience to support
+                critical decisions with efficiency and confidence. Every engagement is built to
+                deliver practical, applicable and high-impact outcomes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screen 2: Carousel -->
+      <section class="snap-section services-carousel-screen" aria-label="Services carousel">
+        <div class="section-inner services-inner">
+          <!-- intentionally empty: the carousel is rendered in the fixed rail overlay -->
+        </div>
+      </section>
+
+      <!-- Fixed overlay: expanding rail + arrows + dots -->
+      <div class="services-rail" aria-hidden="true">
+        <div class="services-rail-inner">
+          <div class="services-rail-content" aria-hidden="true">
+            <div class="rail-swipe">
+              <div class="rail-grid">
+                <h2 class="rail-title" id="railTitle">Business Strategy</h2>
+                <p class="rail-text" id="railText">
+                  We support organizations in defining clear, scalable strategic direction aligned
+                  with real business conditions. Our work ranges from diagnosis to prioritization
+                  and execution of strategic decisions.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA Button - CONTACT -->
+          <div class="services-cta-wrapper">
+            <a class="cta cta--services" href="./contact.html"> CONTACT US </a>
+          </div>
+
+          <!-- Rail navigation arrows (desktop + after expansion) -->
+          <button
+            class="rail-arrow-btn rail-arrow-btn--prev"
+            type="button"
+            data-rail-prev
+            aria-label="Previous service"
+          >
+            <svg class="rail-arrow-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          <button
+            class="rail-arrow-btn rail-arrow-btn--next"
+            type="button"
+            data-rail-next
+            aria-label="Next service"
+          >
+            <svg class="rail-arrow-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M9 6l6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Dots (appear after expansion) -->
+        <div class="rail-controls" aria-hidden="true">
+          <div class="rail-dots" data-rail-dots></div>
+        </div>
+      </div>
+
+      <!-- Footer (auto height snap section) -->
+      <section class="snap-section snap-section--auto footer-section" aria-label="Footer section">
+        <footer class="site-footer" aria-label="Footer">
+          <div class="section-inner footer-inner">
+            <div class="footer-footnote">
+              <p class="footnote-text">
+                <span class="footnote-main">
+                  © 2026 L'Orichalque. All rights reserved. Developed by
+                </span>
+                <span class="footnote-studio"> Estúdio Bolachas</span>
+              </p>
+
+              <img
+                class="footnote-logo"
+                src="./assets/svg/logo-bolachas.svg"
+                alt="Estúdio Bolachas"
+              />
+            </div>
+          </div>
+        </footer>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,315 @@
+/* =========================================================
+   ABOUT PAGE — PAGE-SPECIFIC STYLES (V.0.1)
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Scroll & snap behavior (same logic as Home)
+   --------------------------------------------------------- */
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+}
+
+body {
+  --brand-color: #e3e3e3;
+  --brand-size: 120px;
+  --nav-color: #e3e3e3;
+
+  background-color: #726e75;
+  overscroll-behavior-y: none;
+}
+
+/* ---------------------------------------------------------
+   About layout wrapper
+   --------------------------------------------------------- */
+.about-panel {
+  min-height: calc(100svh - var(--header-h));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+
+/* ---------------------------------------------------------
+   Header inside section
+   --------------------------------------------------------- */
+.about-header {
+  margin-bottom: 28px;
+}
+
+/* ---------------------------------------------------------
+   About block (title + text)
+   Mobile: single column
+   Desktop: two columns
+   --------------------------------------------------------- */
+.about-block {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+/* Titles */
+.about-block-title {
+  margin: 0;
+  font-size: clamp(26px, 6vw, 40px);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  max-width: 22ch;
+}
+
+/* Text */
+.about-block-text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  max-width: 70ch;
+}
+
+/* ---------------------------------------------------------
+   Desktop layout — alternating columns
+   --------------------------------------------------------- */
+@media (min-width: 768px) {
+  .about-block {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 28px;
+  }
+
+  /* default: title left, text right */
+  .about-block-title {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .about-block-text {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /* reversed block */
+  .about-block--reverse .about-block-title {
+    grid-column: 2;
+  }
+
+  .about-block--reverse .about-block-text {
+    grid-column: 1;
+  }
+
+  /* Place CTA under the description (right column) in Section 3 */
+  .about-s3 .cta--about {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+}
+
+/* ---------------------------------------------------------
+   Scroll snap rules (including footer)
+   --------------------------------------------------------- */
+.about-snap .snap-section {
+  min-height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  padding-top: var(--header-h);
+}
+
+.about-snap .snap-section--auto {
+  min-height: auto;
+  padding-top: 0;
+}
+
+/* ---------------------------------------------------------
+   Section-specific color schemes
+   --------------------------------------------------------- */
+.about-s1 {
+  background: #726e75;
+}
+
+.about-s2 {
+  background: #e3e3e3;
+}
+
+.about-s3 {
+  background: #121113;
+}
+
+/* Text colors per section */
+.about-s1 .about-block-title,
+.about-s1 .about-block-text,
+.about-s1 .kicker {
+  color: #e3e3e3;
+}
+
+.about-s2 .about-block-title,
+.about-s2 .about-block-text,
+.about-s2 .kicker {
+  color: #121113;
+}
+
+.about-s3 .about-block-title,
+.about-s3 .about-block-text,
+.about-s3 .kicker {
+  color: #e3e3e3;
+}
+
+/* =========================================================
+   Microinteractions — About (play once per section)
+   Triggered by JS adding:
+   - body.about-s1-active
+   - body.about-s2-active
+   - body.about-s3-active
+   ========================================================= */
+
+@keyframes aboutEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Default (no animation state) */
+.about-snap .about-s1 .kicker,
+.about-snap .about-s1 .about-block-title,
+.about-snap .about-s1 .about-block-text,
+.about-snap .about-s2 .about-block-title,
+.about-snap .about-s2 .about-block-text,
+.about-snap .about-s3 .kicker,
+.about-snap .about-s3 .about-block-title,
+.about-snap .about-s3 .about-block-text {
+  opacity: 1;
+  transform: none;
+}
+
+/* SECTION 1 cascade */
+body.about-s1-active .about-s1 .kicker,
+body.about-s1-active .about-s1 .about-block-title,
+body.about-s1-active .about-s1 .about-block-text {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: aboutEnter 1200ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+body.about-s1-active .about-s1 .kicker {
+  animation-delay: 120ms;
+}
+body.about-s1-active .about-s1 .about-block-title {
+  animation-delay: 320ms;
+}
+body.about-s1-active .about-s1 .about-block-text {
+  animation-delay: 520ms;
+}
+
+/* SECTION 2 cascade (no kicker) */
+body.about-s2-active .about-s2 .about-block-title,
+body.about-s2-active .about-s2 .about-block-text {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: aboutEnter 1200ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+body.about-s2-active .about-s2 .about-block-title {
+  animation-delay: 140ms;
+}
+body.about-s2-active .about-s2 .about-block-text {
+  animation-delay: 340ms;
+}
+
+/* SECTION 3 cascade */
+body.about-s3-active .about-s3 .kicker,
+body.about-s3-active .about-s3 .about-block-title,
+body.about-s3-active .about-s3 .about-block-text,
+body.about-s3-active .about-s3 .cta--about {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: aboutEnter 1200ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+body.about-s3-active .about-s3 .kicker {
+  animation-delay: 120ms;
+}
+body.about-s3-active .about-s3 .about-block-title {
+  animation-delay: 320ms;
+}
+body.about-s3-active .about-s3 .about-block-text {
+  animation-delay: 520ms;
+}
+
+body.about-s3-active .about-s3 .cta--about {
+  animation-delay: 720ms;
+}
+
+/* Prevent 1-frame flash on mobile before IO triggers */
+@media (max-width: 767px) {
+  body:not(.about-s1-active) .about-s1 .kicker,
+  body:not(.about-s1-active) .about-s1 .about-block-title,
+  body:not(.about-s1-active) .about-s1 .about-block-text,
+  body:not(.about-s2-active) .about-s2 .about-block-title,
+  body:not(.about-s2-active) .about-s2 .about-block-text,
+  body:not(.about-s3-active) .about-s3 .kicker,
+  body:not(.about-s3-active) .about-s3 .about-block-title,
+  body:not(.about-s3-active) .about-s3 .cta--about {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  body.about-s1-active .about-s1 .kicker,
+  body.about-s1-active .about-s1 .about-block-title,
+  body.about-s1-active .about-s1 .about-block-text,
+  body.about-s2-active .about-s2 .about-block-title,
+  body.about-s2-active .about-s2 .about-block-text,
+  body.about-s3-active .about-s3 .kicker,
+  body.about-s3-active .about-s3 .about-block-title,
+  body.about-s3-active .about-s3 .about-block-text,
+  body.about-s3-active .about-s3 .cta--about {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 767px) {
+    body:not(.about-s1-active) .about-s1 .kicker,
+    body:not(.about-s1-active) .about-s1 .about-block-title,
+    body:not(.about-s1-active) .about-s1 .about-block-text,
+    body:not(.about-s2-active) .about-s2 .about-block-title,
+    body:not(.about-s2-active) .about-s2 .about-block-text,
+    body:not(.about-s3-active) .about-s3 .kicker,
+    body:not(.about-s3-active) .about-s3 .about-block-title,
+    body:not(.about-s3-active) .about-s3 .about-block-text,
+    body:not(.about-s3-active) .about-s3 .cta--about {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* =========================================================
+   About — Section 3 CTA
+   Same behavior as Home CTA
+   ========================================================= */
+
+.cta--about {
+  margin-top: 22px;
+
+  background: #c6a15b;
+  color: #121113;
+  letter-spacing: 0.08em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta--about:hover {
+    background: #e2360e;
+    color: #e3e3e3;
+    border-color: #e2360e;
+  }
+}
+
+.cta--about:active,
+.cta--about:focus-visible {
+  background: #e3e3e3;
+  color: #e2360e;
+  border-color: #e2360e;
+}

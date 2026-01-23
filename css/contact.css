@@ -1,0 +1,299 @@
+/* =========================================================
+   CONTACT — page-specific styles (V0.1)
+   - Scroll snap + footer reveal
+   - Two-column desktop / single-column mobile
+   - No changes to established layout/mechanics
+   ========================================================= */
+
+/* ---------- Snap + scroll behavior ---------- */
+html {
+  overscroll-behavior-y: none;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+body {
+  overscroll-behavior-y: none;
+  background: #e3e3e3;
+
+  /* Header colors for this page */
+  --brand-color: #e2360e;
+  --nav-color: #e2360e;
+  --nav-hover-color: #e2360e;
+  --nav-active-color: #e2360e;
+}
+
+/* Snap rules (consistent with Services) */
+.contact-page {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-page .snap-section {
+  min-height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  padding-top: var(--header-h);
+
+  display: flex;
+  align-items: flex-start;
+}
+
+.contact-page .snap-section--auto {
+  min-height: auto;
+  padding-top: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Footer section: default flow (matches other pages) */
+.contact-page .footer-section {
+  display: block;
+  align-items: initial;
+}
+
+/* ---------- Contact screen ---------- */
+.contact-inner {
+  min-height: calc(100svh - var(--header-h));
+  display: flex;
+  align-items: center;
+}
+
+.contact-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+/* Left column */
+.contact-title {
+  margin: 0;
+  color: #121113;
+  font-size: clamp(44px, 6vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.contact-email {
+  margin: 10px 0 0;
+  color: #e2360e;
+}
+
+.contact-email-link {
+  color: #e2360e;
+  font-weight: 600;
+}
+
+.contact-text {
+  margin: 18px 0 0;
+  color: #726e75;
+  max-width: 52ch;
+  line-height: 1.6;
+}
+
+/* Mobile: centered hero copy */
+@media (max-width: 899px) {
+  .contact-title,
+  .contact-email,
+  .contact-email-link,
+  .contact-text {
+    text-align: center;
+  }
+
+  .contact-text {
+    font-size: 12px;
+  }
+}
+
+/* ---------- Form ---------- */
+.contact-form {
+  border: 2px solid rgba(18, 17, 19, 0.12);
+  background: rgba(227, 227, 227, 0.55);
+  padding: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(18, 17, 19, 0.7);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 12px;
+  border: 2px solid rgba(18, 17, 19, 0.12);
+  background: rgba(227, 227, 227, 0.35);
+  color: #121113;
+  font-size: 12px;
+  outline: none;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: rgba(18, 17, 19, 0.35);
+}
+
+/* Button */
+.contact-send {
+  width: 100%;
+  background: #121113;
+  color: #e3e3e3;
+  border-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-send:hover {
+    background: #e2360e;
+    color: #e3e3e3;
+  }
+}
+
+.contact-send:active,
+.contact-send:focus-visible {
+  background: #e3e3e3;
+  color: #e2360e;
+  border-color: #e2360e;
+}
+
+.contact-note {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(18, 17, 19, 0.6);
+}
+
+/* Desktop: two columns + vertical centering of left copy */
+@media (min-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .contact-right {
+    justify-self: end;
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .contact-left {
+    justify-self: start;
+    text-align: left;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .contact-title,
+  .contact-email,
+  .contact-text {
+    text-align: left;
+  }
+
+  /* Match content block width with header-inner */
+  .contact-inner {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* =========================================================
+   Microinteractions — Contact (play once)
+   Triggered by JS adding: body.contact-s1-active
+   ========================================================= */
+
+@keyframes contactEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Default state */
+.contact-left .contact-title,
+.contact-left .contact-email,
+.contact-left .contact-text,
+.contact-right .contact-form {
+  opacity: 1;
+  transform: none;
+}
+
+/* Animate on activation */
+body.contact-s1-active .contact-left .contact-title,
+body.contact-s1-active .contact-left .contact-email,
+body.contact-s1-active .contact-left .contact-text,
+body.contact-s1-active .contact-right .contact-form {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: contactEnter 1200ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+body.contact-s1-active .contact-left .contact-title {
+  animation-delay: 120ms;
+}
+
+body.contact-s1-active .contact-left .contact-email {
+  animation-delay: 320ms;
+}
+
+body.contact-s1-active .contact-left .contact-text {
+  animation-delay: 520ms;
+}
+
+body.contact-s1-active .contact-right .contact-form {
+  animation-delay: 720ms;
+}
+
+/* Prevent 1-frame flash on mobile before IO triggers */
+@media (max-width: 899px) {
+  body:not(.contact-s1-active) .contact-left .contact-title,
+  body:not(.contact-s1-active) .contact-left .contact-email,
+  body:not(.contact-s1-active) .contact-left .contact-text,
+  body:not(.contact-s1-active) .contact-right .contact-form {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  body.contact-s1-active .contact-left .contact-title,
+  body.contact-s1-active .contact-left .contact-email,
+  body.contact-s1-active .contact-left .contact-text,
+  body.contact-s1-active .contact-right .contact-form {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 899px) {
+    body:not(.contact-s1-active) .contact-left .contact-title,
+    body:not(.contact-s1-active) .contact-left .contact-email,
+    body:not(.contact-s1-active) .contact-left .contact-text,
+    body:not(.contact-s1-active) .contact-right .contact-form {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

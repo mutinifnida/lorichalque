@@ -1,0 +1,499 @@
+/* =========================================================
+   SERVICES — page-specific styles (V0.1)
+   - No mechanical/layout changes.
+   - Cleanup: remove redundant/conflicting blocks, add comments.
+   ========================================================= */
+
+/* ---------- Scroll snap (Services only) ---------- */
+html {
+  overscroll-behavior-y: none;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+body {
+  overscroll-behavior-y: none;
+  background: #121113;
+
+  /* Header colors for this page */
+  --brand-color: #e3e3e3;
+  --nav-color: #e3e3e3;
+  --nav-hover-color: #e3e3e3;
+}
+
+/* ---------- Snap sections ---------- */
+.services-page {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* All snap sections (including footer) */
+.services-page .snap-section {
+  min-height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  padding-top: var(--header-h);
+
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Footer snap section is auto-height */
+.services-page .snap-section--auto {
+  min-height: auto;
+  padding-top: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Footer section: keep default flow (matches other pages) */
+.services-page .footer-section {
+  display: block;
+  align-items: initial;
+}
+
+/* Hide rail on footer */
+body.services-footer-active .services-rail {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+.services-inner {
+  min-height: calc(100svh - var(--header-h));
+}
+
+/* =========================================================
+   Screen 1 — Hero
+   ========================================================= */
+
+.services-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 50px;
+  padding-top: 20vh;
+  max-width: 1100px;
+}
+
+.services-hero-text {
+  max-width: 64ch;
+}
+
+.services-description {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(227, 227, 227, 0.8);
+}
+
+.services-hero-title {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.services-title {
+  margin: 0;
+  font-family: "Dela Gothic One";
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #e3e3e3;
+  text-align: left;
+  max-width: 18ch;
+}
+
+@media (min-width: 900px) {
+  .services-hero {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .services-title {
+    text-align: right;
+  }
+}
+
+/* =========================================================
+   Fixed overlay — Expanding Rail
+   ========================================================= */
+
+.services-rail {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+
+  display: flex;
+  flex-direction: column; /* rectangle above, dots below */
+  align-items: center;
+  justify-content: flex-start;
+
+  z-index: 900;
+  transform: translateY(0);
+  transition: transform 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
+
+  /* Overlay itself doesn't intercept events; child elements opt-in */
+  pointer-events: none;
+}
+
+.services-rail-inner {
+  width: min(1100px, calc(100% - 32px));
+  height: 96px;
+  background: #e2360e;
+  border-radius: 0;
+
+  position: relative; /* anchor arrows */
+  transform-origin: bottom;
+  transition: height 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
+
+  touch-action: pan-y;
+}
+
+.services-rail-inner,
+.services-rail-inner * {
+  pointer-events: auto;
+}
+
+/* Final position: move to center AND grow taller
+   NOTE: keeping current values as-is to preserve established behavior. */
+body.services-carousel-active .services-rail {
+  transform: translateY(calc((-50vh + (var(--header-h) / 2)) + 30vh));
+}
+
+body.services-carousel-active .services-rail-inner {
+  height: min(520px, 60vh);
+}
+
+/* Rail content area */
+.services-rail-content {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 36px;
+
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+  transition-delay: 0ms;
+
+  color: #e3e3e3;
+  user-select: none;
+
+  /* Clips slide-out text while preserving arrows (arrows are outside this box) */
+  overflow: hidden;
+}
+
+/* Content appears after expansion */
+body.services-carousel-active .services-rail-content {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 540ms;
+}
+
+/* Drag affordance (desktop) */
+@media (hover: hover) and (pointer: fine) {
+  .services-rail-inner {
+    cursor: grab;
+  }
+  body.is-dragging .services-rail-inner {
+    cursor: grabbing;
+  }
+}
+
+/* =========================================================
+   Rail navigation arrows (visible after expansion)
+   ========================================================= */
+
+.rail-arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 44px;
+  height: 44px;
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: none;
+  border: none;
+  color: #e3e3e3;
+  cursor: pointer;
+
+  opacity: 0;
+  transition: opacity 160ms ease;
+
+  /* hidden by default; shown after expansion */
+  pointer-events: none;
+}
+
+.rail-arrow-btn--prev {
+  left: -50px;
+}
+
+.rail-arrow-btn--next {
+  right: -50px;
+}
+
+.rail-arrow-icon {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Appear only after expansion */
+body.services-carousel-active .rail-arrow-btn {
+  opacity: 0.85;
+  pointer-events: auto;
+  transition-delay: 540ms;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body.services-carousel-active .rail-arrow-btn:hover {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .rail-arrow-btn--prev {
+    left: -52px;
+  }
+  .rail-arrow-btn--next {
+    right: -52px;
+  }
+}
+
+/* =========================================================
+   Rail copy layout (title + text)
+   ========================================================= */
+
+/* Wrapper that follows the drag slightly (JS applies transform inline) */
+.rail-swipe {
+  width: 100%;
+}
+
+/* Text grid */
+.rail-grid {
+  width: 100%;
+  max-width: 1100px;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  align-items: center;
+  text-align: center; /* mobile */
+}
+
+@media (min-width: 900px) {
+  .rail-grid {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 28px;
+    text-align: left; /* desktop */
+  }
+}
+
+.rail-title {
+  margin: 0;
+  font-family: "Dela Gothic One";
+  font-size: clamp(42px, 4vw, 54px);
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  text-align: inherit;
+  max-width: 18ch;
+}
+
+.rail-text {
+  margin: 0;
+  font-family: "Golos Text";
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(227, 227, 227, 0.85);
+  max-width: 60ch;
+  padding-right: 2vw;
+}
+
+/* =========================================================
+   Carousel transitions (current implementation)
+   ========================================================= */
+
+.rail-grid {
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+/* Old fade (kept for compatibility; JS may still use this) */
+.rail-grid.is-fading {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+/* Slide-out + fade-out (used by current JS) */
+.rail-grid.is-out-left {
+  opacity: 0;
+  transform: translateX(-120%);
+}
+
+.rail-grid.is-out-right {
+  opacity: 0;
+  transform: translateX(120%);
+}
+
+/* =========================================================
+   Dots controls (visible after expansion)
+   ========================================================= */
+
+.rail-controls {
+  width: min(1100px, calc(100% - 32px));
+  margin: 10px auto 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+  transition-delay: 0ms;
+}
+
+body.services-carousel-active .rail-controls {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 680ms;
+}
+
+.rail-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.rail-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  border: 2px solid rgba(227, 227, 227, 0.75);
+  background: transparent;
+  cursor: pointer;
+}
+
+.rail-dot.is-active {
+  background: #e3e3e3;
+}
+
+/* =========================================================
+   Microinteractions — Services hero (play once)
+   Triggered by JS adding: body.services-s1-active
+   ========================================================= */
+
+@keyframes servicesHeroEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Default state */
+.services-hero .services-title,
+.services-hero .services-description {
+  opacity: 1;
+  transform: none;
+}
+
+/* Animate when s1 becomes active */
+body.services-s1-active .services-hero .services-title,
+body.services-s1-active .services-hero .services-description {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: servicesHeroEnter 1200ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+body.services-s1-active .services-hero .services-title {
+  animation-delay: 120ms;
+}
+
+body.services-s1-active .services-hero .services-description {
+  animation-delay: 360ms;
+}
+
+/* Prevent 1-frame flash on mobile before IO triggers */
+@media (max-width: 767px) {
+  body:not(.services-s1-active) .services-hero .services-title,
+  body:not(.services-s1-active) .services-hero .services-description {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  body.services-s1-active .services-hero .services-title,
+  body.services-s1-active .services-hero .services-description {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 767px) {
+    body:not(.services-s1-active) .services-hero .services-title,
+    body:not(.services-s1-active) .services-hero .services-description {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* =========================================================
+   Services — CTA below carousel
+   ========================================================= */
+
+.services-cta-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 38px;
+  pointer-events: auto;
+}
+
+/* Reuse global CTA behavior */
+.cta--services {
+  background: #c6a15b;
+  color: #121113;
+  letter-spacing: 0.08em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta--services:hover {
+    background: #e2360e;
+    color: #e3e3e3;
+    border-color: #e2360e;
+  }
+}
+
+.cta--services:active,
+.cta--services:focus-visible {
+  background: #e3e3e3;
+  color: #e2360e;
+  border-color: #e2360e;
+}

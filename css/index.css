@@ -1,0 +1,582 @@
+/* =========================================================
+   HOME (index.css) — Page-specific styles
+   - Keeps scroll-snap behavior and section visuals.
+   - Does not alter established layout/mechanics.
+   ========================================================= */
+
+/* ---------- Scroll snap (Home only) ---------- */
+html {
+  overscroll-behavior-y: none;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+/* Home defaults / fallback theme (actual header colors are set per section via data-*) */
+body {
+  --brand-color: #e3e3e3;
+  --brand-size: 120px;
+  --nav-hover-color: #e3e3e3;
+  --nav-active-color: #e3e3e3;
+
+  background: #e3e3e3;
+  overscroll-behavior-y: none;
+}
+
+/* Snap layout */
+.snap-page {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.snap-section {
+  min-height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  padding-top: var(--header-h);
+}
+
+/* Auto-height snap section (footer) */
+.snap-section--auto {
+  min-height: auto;
+  padding-top: 0;
+}
+
+/* ---------- Section backgrounds ---------- */
+.section-1 {
+  background: #e3e3e3;
+  --hero-accent: #e2360e;
+  position: relative; /* anchor for hero-complement (desktop) */
+}
+
+.section-2 {
+  background: #e2360e;
+}
+
+.section-3 {
+  background: #121113;
+}
+
+/* =========================================================
+   SECTION 1 — Hero
+   ========================================================= */
+
+.hero {
+  min-height: calc(100svh - var(--header-h));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  padding-block: 10px;
+}
+
+.hero-title {
+  margin: 0;
+  color: #121113;
+
+  font-size: clamp(48px, 7vw, 92px);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  max-width: 18ch;
+}
+
+.hero-accent {
+  color: var(--hero-accent, #e3e3e3);
+}
+
+.hero-subtitle {
+  margin-top: 2vh;
+
+  color: #726e75;
+  font-size: clamp(14px, 2.2vw, 20px);
+  line-height: 1.35;
+  max-width: 72ch;
+}
+
+/* CTA (hero) */
+.cta--hero {
+  margin-top: 16px;
+  margin-bottom: 40px;
+
+  background: #121113;
+  color: #e3e3e3;
+}
+
+/* CTA hover (desktop) */
+@media (hover: hover) and (pointer: fine) {
+  .cta--hero:hover {
+    background: #c6a15b;
+    color: #121113;
+  }
+}
+
+/* CTA active / focus */
+.cta--hero:active {
+  background: #121113;
+  color: #c6a15b;
+  transform: translateY(1px);
+}
+
+.cta--hero:focus-visible {
+  background: #121113;
+  color: #c6a15b;
+}
+
+/* Decorative complement (masked SVG) */
+.hero-complement {
+  display: block;
+  width: 140px;
+  height: 140px;
+
+  background-color: var(--brand-color);
+
+  -webkit-mask-image: url("../assets/svg/crystal.svg");
+  mask-image: url("../assets/svg/crystal.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* =========================================================
+   SECTION 2 — Milestones
+   ========================================================= */
+
+.milestones {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100svh - var(--header-h));
+  gap: 18px;
+}
+
+.milestones-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Label (body font, like About kicker) */
+.milestones-kicker {
+  margin: 0 0 24px;
+  font-family: "Golos Text", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(11, 13, 18, 0.65);
+}
+
+.milestones-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+}
+
+.milestone {
+  background: transparent;
+  padding: 14px 0px;
+}
+
+.milestone-title {
+  margin: 0 0 8px;
+  color: #e3e3e3;
+  font-size: clamp(42px, 6vw, 68px);
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  max-width: 20ch;
+}
+
+.milestone-text {
+  margin: 0;
+  color: #e3e3e3;
+  font-size: clamp(10px, 3vw, 18px);
+  max-width: 60ch;
+}
+
+.highlight {
+  color: #121113;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   Microinteractions — Home / Section 2 (Milestones)
+   - Play once when section enters focus (via JS class)
+   - Reveal mask: left -> right, staggered
+   - Hover: invert title/highlight (desktop)
+   - Click: toggle subtitle (milestone-text)
+   ========================================================= */
+
+/* Base: make each milestone clip its own reveal mask */
+.section-2 .milestone {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Reveal mask (covers content, then slides away left->right via scaleX) */
+.section-2 .milestone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #e2360e; /* must match section-2 background */
+  transform-origin: left;
+  transform: scaleX(1);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Ensure milestone content stays above background but below mask */
+.section-2 .milestone-content,
+.section-2 .milestone-media {
+  position: relative;
+  z-index: 1;
+}
+
+/* Triggered by JS: run reveal animation once */
+body.home-s2-active .section-2 .milestone::before {
+  animation: milestoneReveal 900ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+/* Stagger order (DOM order = left->right, top->bottom) */
+body.home-s2-active .section-2 .milestone:nth-child(1)::before {
+  animation-delay: 120ms;
+}
+body.home-s2-active .section-2 .milestone:nth-child(2)::before {
+  animation-delay: 320ms;
+}
+body.home-s2-active .section-2 .milestone:nth-child(3)::before {
+  animation-delay: 520ms;
+}
+body.home-s2-active .section-2 .milestone:nth-child(4)::before {
+  animation-delay: 720ms;
+}
+
+@keyframes milestoneReveal {
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* --- Hover invert (desktop only) ---
+   Normal: title=#121113, highlight=#e2360e
+   Hover:  title=#e2360e, highlight=#121113
+*/
+@media (hover: hover) and (pointer: fine) {
+  .section-2 .milestone:hover .milestone-title {
+    color: #121113;
+  }
+  .section-2 .milestone:hover .highlight {
+    color: #e3e3e3;
+  }
+}
+
+/* --- Click to reveal subtitle (milestone-text) ---
+   Default: hidden
+*/
+.section-2 .milestone-text {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 260ms ease,
+    opacity 220ms ease;
+}
+
+/* Open state */
+.section-2 .milestone.is-open .milestone-text {
+  max-height: 200px;
+  opacity: 1;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .section-2 .milestone::before {
+    animation: none !important;
+    transform: scaleX(0);
+  }
+  .section-2 .milestone-text {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   SECTION 3 — Differentiator
+   ========================================================= */
+
+.differentiator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100svh - var(--header-h));
+  gap: 16px;
+}
+
+.diff-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.diff-title {
+  color: #e2360e;
+  margin: 0;
+  max-width: 24ch;
+  font-size: clamp(48px, 7vw, 92px);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.diff-text {
+  color: #e3e3e3;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+/* Desktop upgrades */
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 64px;
+  }
+
+  .milestones-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+  }
+
+  .differentiator {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .diff-col--left {
+    padding-right: 20px;
+  }
+
+  .diff-col--right {
+    padding-left: 20px;
+  }
+
+  .diff-title {
+    font-size: 44px;
+  }
+
+  .diff-text {
+    font-size: 17px;
+  }
+
+  /* Complement position (desktop) */
+  .hero-complement {
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    margin: 0;
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Mobile refinements (vertical) */
+@media (max-width: 767px) {
+  /* Shared hero width (title/subtitle/button) */
+  .section-1 {
+    --hero-block-w: min(92vw, 520px);
+  }
+
+  .hero-title {
+    font-size: clamp(38px, 9.5vw, 54px);
+    max-width: var(--hero-block-w);
+  }
+
+  .hero-subtitle {
+    max-width: var(--hero-block-w);
+    width: 100%;
+    font-size: clamp(16px, 4.2vw, 20px);
+  }
+
+  .cta--hero {
+    width: var(--hero-block-w);
+    justify-content: center;
+    box-sizing: border-box;
+
+    white-space: nowrap;
+    padding-left: 18px;
+    padding-right: 18px;
+
+    letter-spacing: 0.1em;
+    font-size: 14px;
+  }
+
+  /* Complement (mobile): below the CTA, towards the bottom */
+  .hero-complement {
+    margin-top: auto; /* push towards the bottom of the hero column */
+    align-self: center;
+    margin-bottom: 14px;
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Mobile: add more top spacing between header and hero title */
+@media (max-width: 767px) {
+  .section-1 .hero {
+    padding-top: calc(var(--header-h) + 70px);
+  }
+}
+
+/* =========================================================
+   Microinteractions — Home / Section 1 (on enter)
+   Triggered by JS adding/removing body.home-s1-active
+   ========================================================= */
+
+.section-1 .hero-title,
+.section-1 .hero-subtitle,
+.section-1 .cta--hero {
+  opacity: 1;
+  transform: none;
+}
+
+/* Animate when section 1 becomes active */
+body.home-s1-active .section-1 .hero-title,
+body.home-s1-active .section-1 .hero-subtitle,
+body.home-s1-active .section-1 .cta--hero {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: heroEnter 1200ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+body.home-s1-active .section-1 .hero-title {
+  animation-delay: 120ms;
+}
+body.home-s1-active .section-1 .hero-subtitle {
+  animation-delay: 320ms;
+}
+body.home-s1-active .section-1 .cta--hero {
+  animation-delay: 520ms;
+}
+
+@keyframes heroEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  body.home-s1-active .section-1 .hero-title,
+  body.home-s1-active .section-1 .hero-subtitle,
+  body.home-s1-active .section-1 .cta--hero {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Section 2 — align milestones grid with header width */
+@media (min-width: 768px) {
+  .milestones-grid {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Section 3 CTA (same logic as Section 1 CTA, adapted) */
+.cta--diff {
+  margin-top: 18px;
+
+  background: #c6a15b;
+  color: #121113;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta--diff:hover {
+    background: #e2360e;
+    color: #e3e3e3;
+  }
+}
+
+.cta--diff:active,
+.cta--diff:focus-visible {
+  background: #e3e3e3;
+  color: #e2360e;
+  border-color: #e2360e;
+}
+
+/* =========================================================
+   Microinteractions — Home / Section 3 (Differentiator)
+   Triggered by JS adding body.home-s3-active (play once)
+   ========================================================= */
+
+.section-3 .kicker,
+.section-3 .diff-title,
+.section-3 .diff-text,
+.section-3 .cta--diff {
+  opacity: 1;
+  transform: none;
+}
+
+body.home-s3-active .section-3 .kicker,
+body.home-s3-active .section-3 .diff-title,
+body.home-s3-active .section-3 .diff-text,
+body.home-s3-active .section-3 .cta--diff {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: diffEnter 1200ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+body.home-s3-active .section-3 .kicker {
+  animation-delay: 120ms;
+}
+
+body.home-s3-active .section-3 .diff-title {
+  animation-delay: 320ms;
+}
+
+body.home-s3-active .section-3 .diff-text {
+  animation-delay: 520ms;
+}
+
+body.home-s3-active .section-3 .cta--diff {
+  animation-delay: 720ms;
+}
+
+@keyframes diffEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-s3-active .section-3 .kicker,
+  body.home-s3-active .section-3 .diff-title,
+  body.home-s3-active .section-3 .diff-text,
+  body.home-s3-active .section-3 .cta--diff {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Prevent 1-frame flash on mobile before IO triggers */
+@media (max-width: 767px) {
+  body:not(.home-s3-active) .section-3 .kicker,
+  body:not(.home-s3-active) .section-3 .diff-title,
+  body:not(.home-s3-active) .section-3 .diff-text,
+  body:not(.home-s3-active) .section-3 .cta--diff {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

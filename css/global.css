@@ -1,0 +1,551 @@
+/* =========================================================
+   GLOBAL (shared across pages)
+   - Base tokens, typography, header/nav, footer and mobile drawer.
+   - Do not edit page-specific visuals here (use each page CSS).
+   ========================================================= */
+
+:root {
+  /* Brand (logo color is driven by CSS var, often overridden per page/section) */
+  --brand-color: #0b0d12;
+
+  /* Navigation colors (often overridden per page/section) */
+  --nav-color: #e3e3e3;
+  --nav-hover-color: #121113;
+  --nav-active-color: #121113;
+
+  /* Layout constants */
+  --header-h: 72px;
+  --brand-size: 120px;
+}
+
+/* =========================================================
+   Fonts
+   ========================================================= */
+
+/* Golos Text — body text */
+@font-face {
+  font-family: "Golos Text";
+  src: url("../assets/fonts/GolosText-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Dela Gothic One — headings */
+@font-face {
+  font-family: "Dela Gothic One";
+  src: url("../assets/fonts/DelaGothicOne-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Corben — footnote brand */
+@font-face {
+  font-family: "Corben";
+  src: url("../assets/fonts/Corben-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =========================================================
+   Base
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  height: 100%;
+  /* Prevent tiny layout shifts between pages with/without scrollbar */
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  font-family:
+    "Golos Text",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  line-height: 1.5;
+  color: #0b0d12;
+  background: #ffffff;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Dela Gothic One", sans-serif;
+  font-weight: 400;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid #0b0d12;
+  outline-offset: 2px;
+}
+
+/* Shared content wrapper */
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 16px 40px;
+}
+
+@media (min-width: 768px) {
+  .section-inner {
+    padding: 40px 20px 60px;
+  }
+}
+
+/* =========================================================
+   Header / Navigation
+   ========================================================= */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  background: transparent;
+  border-bottom: none;
+
+  /* Reactive header on scroll */
+  transition:
+    background-color 180ms ease,
+    backdrop-filter 180ms ease;
+}
+
+.site-header.is-scrolled {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .header-inner {
+    padding: 16px 20px;
+  }
+}
+
+/* Brand / Logo (masked SVG so color comes from CSS variable) */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--brand-color);
+}
+
+.brand-logo {
+  display: inline-block;
+  width: var(--brand-size, 120px);
+  height: var(--brand-size, 120px);
+
+  background-color: currentColor;
+
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+
+  -webkit-mask-image: url("../assets/svg/logo-short.svg");
+  mask-image: url("../assets/svg/logo-short.svg");
+}
+
+/* Nav */
+.nav {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nav-link {
+  font-size: 14px;
+  padding: 8px 10px;
+  text-transform: uppercase;
+
+  color: var(--nav-color);
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
+}
+
+.nav-link:hover {
+  color: var(--nav-hover-color);
+}
+
+.nav-link:focus-visible {
+  color: var(--nav-hover-color);
+}
+
+@media (min-width: 768px) {
+  .nav-link {
+    font-size: 15px;
+  }
+}
+
+/* Current page indicator (desktop + normal nav) */
+.nav-link[aria-current="page"] {
+  color: var(--nav-color);
+  position: relative;
+  font-weight: 500; /* medium */
+}
+
+.nav-link[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+
+  width: 100%;
+  height: 2px;
+
+  background-color: currentColor;
+  opacity: 0.9;
+}
+
+/* Helper label (used in multiple pages) */
+.kicker {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e3e3e3;
+}
+
+/* Shared CTA base (theme colors are page-specific) */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+
+  padding: 14px 44px;
+  border: 2px solid transparent;
+
+  font-family: "Dela Gothic One", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 120ms ease;
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+
+.site-footer {
+  background: #121113;
+  color: #e3e3e3;
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Footnote */
+.footer-footnote {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.footnote-text {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  line-height: 1.2;
+}
+
+.footnote-main {
+  font-family: "Golos Text", sans-serif;
+  font-weight: 500; /* Golos Text Medium */
+  font-size: 12px;
+  color: #e3e3e3;
+}
+
+.footnote-studio {
+  font-family: "Corben", serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: #e3e3e3;
+  margin-left: 3px;
+}
+
+.footnote-logo {
+  height: 20px;
+  width: auto;
+  display: inline-block;
+}
+
+/* =========================================================
+   Footer — Mobile (2-line layout)
+   ========================================================= */
+@media (max-width: 767px) {
+  .footer-footnote {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .footnote-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2px;
+  }
+
+  /* Line 1 */
+  .footnote-main {
+    display: block;
+  }
+
+  /* Line 2: keep text + logo together */
+  .footnote-studio {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .footnote-logo {
+    height: 14px;
+    width: auto;
+    margin: 0;
+  }
+}
+
+/* =========================================================
+   Mobile drawer menu
+   ========================================================= */
+
+.menu-toggle {
+  display: none; /* desktop default */
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--nav-color);
+  cursor: pointer;
+}
+
+/* hamburger lines */
+.menu-toggle-lines {
+  display: inline-block;
+  width: 22px;
+  height: 14px;
+  position: relative;
+
+  background: linear-gradient(currentColor, currentColor);
+  background-size: 100% 2px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.menu-toggle-lines::before,
+.menu-toggle-lines::after,
+.menu-toggle-lines span {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.menu-toggle-lines::before {
+  top: 0;
+}
+
+.menu-toggle-lines::after {
+  bottom: 0;
+}
+
+/* Drawer base (hidden by default) */
+.mobile-drawer {
+  display: none; /* desktop default */
+}
+
+/* Mobile drawer: no underline for current page (keeps drawer cleaner) */
+@media (max-width: 767px) {
+  .nav--drawer .nav-link[aria-current="page"]::after {
+    display: none;
+  }
+}
+
+/* Mobile behavior */
+@media (max-width: 767px) {
+  /* Header layout */
+  .header-inner {
+    position: relative;
+    justify-content: flex-start;
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Show hamburger */
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 10002;
+  }
+
+  /* Center logo on mobile */
+  .brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10001;
+  }
+
+  /* Hide desktop nav on mobile */
+  .nav--desktop {
+    display: none;
+  }
+
+  /* Drawer overlay: full screen */
+  .mobile-drawer {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+    z-index: 10000;
+  }
+
+  /* Hamburger -> X when menu is open */
+  body.menu-open .menu-toggle-lines {
+    background: none; /* remove middle line */
+  }
+
+  body.menu-open .menu-toggle-lines::before {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  body.menu-open .menu-toggle-lines::after {
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+  }
+
+  /* Sliding panel */
+  .nav--drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+
+    padding: 0 24px;
+    place-content: center;
+    justify-items: center;
+
+    background: #121113;
+
+    display: grid;
+    gap: 14px;
+
+    transform: translateX(100%);
+    transition: transform 240ms ease;
+  }
+
+  .nav--drawer .nav-link {
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    color: #e3e3e3;
+    padding: 14px 18px;
+
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .nav--drawer .nav-link:hover,
+  .nav--drawer .nav-link:focus-visible {
+    background: #e3e3e3;
+    color: #121113;
+  }
+
+  .nav--drawer .nav-link {
+    min-width: 100vw;
+    text-align: center;
+  }
+
+  /* Open state (toggled by JS on body) */
+  body.menu-open .mobile-drawer {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  body.menu-open .nav--drawer {
+    transform: translateX(0);
+  }
+}
