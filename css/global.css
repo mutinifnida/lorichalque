@@ -14,7 +14,7 @@
   --nav-active-color: #121113;
 
   /* Layout constants */
-  --header-h: 72px;
+  --header-h: 64px;
   --brand-size: 120px;
 }
 
@@ -138,18 +138,12 @@ a {
     backdrop-filter 180ms ease;
 }
 
-.site-header.is-scrolled {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding: 10px 16px;
   max-width: 1100px;
   margin: 0 auto;
 }
