@@ -18,7 +18,7 @@ body {
   /* Header colors for this page */
   --brand-color: #e3e3e3;
   --nav-color: #e3e3e3;
-  --nav-hover-color: #e3e3e3;
+  --nav-hover-color: #c6a15b;
 }
 
 /* ---------- Snap sections ---------- */
@@ -82,7 +82,7 @@ body.services-footer-active .services-rail {
 
 .services-description {
   margin: 0;
-  font-size: 17px;
+  font-size: 14px;
   line-height: 1.6;
   color: rgba(227, 227, 227, 0.8);
 }
