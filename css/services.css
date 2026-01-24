@@ -197,7 +197,7 @@ body.services-carousel-active .services-rail-inner {
   align-items: center;
   justify-content: center;
 
-  padding: 36px;
+  padding: 42px;
 
   opacity: 0;
   transform: translateY(8px);
@@ -249,7 +249,7 @@ body.services-carousel-active .services-rail-content {
 
   background: none;
   border: none;
-  color: #e3e3e3;
+  color: #121113;
   cursor: pointer;
 
   opacity: 0;
@@ -260,21 +260,19 @@ body.services-carousel-active .services-rail-content {
 }
 
 .rail-arrow-btn--prev {
-  left: -50px;
+  left: 16px;
 }
 
 .rail-arrow-btn--next {
-  right: -50px;
+  right: 16px;
 }
 
 .rail-arrow-icon {
-  width: 26px;
-  height: 26px;
+  width: 40px;
+  height: 40px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 2.75;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  stroke-width: 3;
 }
 
 /* Appear only after expansion */
@@ -292,10 +290,10 @@ body.services-carousel-active .rail-arrow-btn {
 
 @media (max-width: 480px) {
   .rail-arrow-btn--prev {
-    left: -52px;
+    left: 0px;
   }
   .rail-arrow-btn--next {
-    right: -52px;
+    right: 0px;
   }
 }
 
@@ -312,6 +310,10 @@ body.services-carousel-active .rail-arrow-btn {
 .rail-grid {
   width: 100%;
   max-width: 1100px;
+  padding-bottom: 36px;
+
+  padding-inline: 18px;
+  box-sizing: border-box;
 
   display: grid;
   grid-template-columns: 1fr;
@@ -320,32 +322,54 @@ body.services-carousel-active .rail-arrow-btn {
   text-align: center; /* mobile */
 }
 
+@media (max-width: 360px) {
+  .services-rail-content {
+    /* opcional: um pouco menos de padding geral pra sobrar área útil */
+    padding: 34px 24px;
+  }
+
+  .rail-grid {
+    padding-inline: 22px; /* margem lateral mais evidente */
+  }
+}
+
 @media (min-width: 900px) {
   .rail-grid {
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: 28px;
-    text-align: left; /* desktop */
+    grid-template-columns: 1fr; /* 1 coluna no desktop */
+    gap: 18px;
+    text-align: center;
+
+    /* centralização perfeita dentro da área do rail */
+    justify-items: center;
+  }
+
+  .rail-title {
+    padding-bottom: 20px;
   }
 }
 
 .rail-title {
+  color: #121113;
   margin: 0;
   font-family: "Dela Gothic One";
-  font-size: clamp(42px, 4vw, 54px);
+  font-size: clamp(30px, 4vw, 60px);
   letter-spacing: 0.01em;
   line-height: 1.1;
   text-align: inherit;
-  max-width: 18ch;
 }
 
 .rail-text {
   margin: 0;
   font-family: "Golos Text";
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.6;
   color: rgba(227, 227, 227, 0.85);
-  max-width: 60ch;
-  padding-right: 2vw;
+  max-width: 80ch;
+}
+
+.rail-title,
+.rail-text {
+  overflow-wrap: anywhere;
 }
 
 /* =========================================================
@@ -405,24 +429,40 @@ body.services-carousel-active .rail-controls {
 }
 
 .rail-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 30px; /* distância da base do retângulo */
+  transform: translateX(-50%);
+
   display: flex;
-  gap: 6px;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
+  gap: 10px;
+
+  z-index: 2;
 }
 
 .rail-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 999px;
-  border: 2px solid rgba(227, 227, 227, 0.75);
-  background: transparent;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+
+  border-radius: 50%; /* círculo perfeito */
+  background-color: #121113;
+
+  border: none;
   cursor: pointer;
+
+  opacity: 1;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
 }
 
 .rail-dot.is-active {
   background: #e3e3e3;
+}
+
+.rail-dots button:hover {
+  transform: scale(1.15);
 }
 
 /* =========================================================
