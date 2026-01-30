@@ -577,9 +577,4 @@ a {
     opacity: 1;
     pointer-events: none;
   }
-
-  /* Evita que o crystal encoste nos links, caso o menu fique “curto” */
-  .nav--drawer {
-    padding-bottom: 140px;
-  }
 }

@@ -33,7 +33,7 @@
     },
     {
       title: "Market Analysis",
-      text: "We conduct data-driven market analysis to support decisions with greater confidence and strategic clarity. Our work evaluates market scenarios, trends, competitive dynamics and growth opportunities. By combining quantitative analysis with strategic interpretation, we help organizations understand their position, assess risks and identify paths for expansion."
+      text: "We conduct data-driven analysis to support decisions with clarity. Our work evaluates scenarios, trends, competitive dynamics and growth opportunities. We help organizations understand their position and identify paths for expansion."
     },
     {
       title: "Business Intelligence",
