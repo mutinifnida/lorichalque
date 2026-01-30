@@ -315,6 +315,7 @@ a {
   height: 20px;
   width: auto;
   display: inline-block;
+  margin: 10px;
 }
 
 /* =========================================================
@@ -359,7 +360,7 @@ a {
   .footnote-logo {
     height: 14px;
     width: auto;
-    margin: 0;
+    margin: 8px;
   }
 }
 
@@ -541,5 +542,44 @@ a {
 
   body.menu-open .nav--drawer {
     transform: translateX(0);
+  }
+
+  body.menu-open .brand-logo {
+    -webkit-mask-image: url("../assets/svg/logo-full.svg");
+    mask-image: url("../assets/svg/logo-full.svg");
+    width: 90vw;
+    color: #e2360e;
+    margin-top: 100px;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobile-drawer {
+    position: fixed; /* já é, mas garantindo o contexto */
+  }
+
+  .drawer-crystal {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+
+    width: 110px;
+    height: 110px;
+
+    background-color: #e2360e;
+
+    -webkit-mask: url("../assets/svg/crystal.svg") no-repeat center;
+    mask: url("../assets/svg/crystal.svg") no-repeat center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+
+    opacity: 1;
+    pointer-events: none;
+  }
+
+  /* Evita que o crystal encoste nos links, caso o menu fique “curto” */
+  .nav--drawer {
+    padding-bottom: 140px;
   }
 }

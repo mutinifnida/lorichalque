@@ -183,7 +183,7 @@ body {
 .milestone-title {
   margin: 0 0 8px;
   color: #e3e3e3;
-  font-size: clamp(42px, 6vw, 68px);
+  font-size: clamp(38px, 6vw, 68px);
   letter-spacing: 0.01em;
   line-height: 1.15;
   max-width: 20ch;
@@ -424,13 +424,6 @@ body.home-s2-active .section-2 .milestone:nth-child(4)::before {
     margin-bottom: 14px;
     width: 120px;
     height: 120px;
-  }
-}
-
-/* Mobile: add more top spacing between header and hero title */
-@media (max-width: 767px) {
-  .section-1 .hero {
-    padding-top: calc(var(--header-h) + 70px);
   }
 }
 

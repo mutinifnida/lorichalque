@@ -82,9 +82,17 @@ body.services-footer-active .services-rail {
 
 .services-description {
   margin: 0;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
   color: rgba(227, 227, 227, 0.8);
+}
+
+@media (max-width: 480px) {
+  .services-description {
+    font-size: 12px;
+    line-height: 1.2;
+    margin: 0;
+  }
 }
 
 .services-hero-title {
@@ -169,6 +177,12 @@ body.services-footer-active .services-rail {
   transform-origin: bottom;
   transition: height 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
 
+  touch-action: pan-y;
+}
+
+/* Mobile swipe: deixa o browser saber que vertical é scroll,
+   e horizontal a gente controla no JS */
+.services-rail-inner {
   touch-action: pan-y;
 }
 
@@ -373,30 +387,23 @@ body.services-carousel-active .rail-arrow-btn {
 }
 
 /* =========================================================
-   Carousel transitions (current implementation)
+   Carousel transitions
    ========================================================= */
 
 .rail-grid {
-  transition:
-    opacity 220ms ease,
-    transform 220ms ease;
+  /* Simple fade-only transition (no slide / no movement) */
+  transition: opacity 220ms ease;
 }
 
-/* Old fade (kept for compatibility; JS may still use this) */
+/* Fade-out */
 .rail-grid.is-fading {
   opacity: 0;
-  transform: translateY(6px);
 }
 
-/* Slide-out + fade-out (used by current JS) */
-.rail-grid.is-out-left {
-  opacity: 0;
-  transform: translateX(-120%);
-}
-
+/* Back-compat: se algo ainda aplicar essas classes, mantém fade-only */
+.rail-grid.is-out-left,
 .rail-grid.is-out-right {
   opacity: 0;
-  transform: translateX(120%);
 }
 
 /* =========================================================

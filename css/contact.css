@@ -18,7 +18,7 @@ body {
 
   /* Header colors for this page */
   --brand-color: #e2360e;
-  --nav-color: #e2360e;
+  --nav-color: #726e75;
   --nav-hover-color: #e2360e;
   --nav-active-color: #e2360e;
 }
@@ -87,10 +87,8 @@ body {
 }
 
 .contact-text {
-  margin: 18px 0 0;
   color: #726e75;
-  max-width: 52ch;
-  line-height: 1.6;
+  line-height: 1.2;
 }
 
 /* Mobile: centered hero copy */
@@ -103,7 +101,7 @@ body {
   }
 
   .contact-text {
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
@@ -111,21 +109,21 @@ body {
 .contact-form {
   border: 2px solid rgba(18, 17, 19, 0.12);
   background: rgba(227, 227, 227, 0.55);
-  padding: 18px;
+  padding: 10px;
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
 .field {
   display: grid;
-  gap: 6px;
+  gap: 4px;
 }
 
 .label {
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(18, 17, 19, 0.7);
+  color: #726e75;
 }
 
 .input,

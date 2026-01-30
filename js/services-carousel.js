@@ -66,14 +66,15 @@
     });
   };
 
-  const setIndex = (i, direction = "next") => {
+  const setIndex = (i, _direction = "next") => {
     index = (i + items.length) % items.length;
 
-    const outClass = direction === "next" ? "is-out-left" : "is-out-right";
-
-    // OUT (slide + fade)
+    // OUT (simple fade only)
     clearAnim();
-    grid.classList.add(outClass);
+
+    // Ensure any drag feedback transform doesn't persist into the fade.
+    grid.style.transform = "";
+    grid.classList.add("is-fading");
 
     window.setTimeout(() => {
       // Swap copy
@@ -83,8 +84,8 @@
       // Update dots
       syncDots();
 
-      // IN: return to normal state (no slide-in)
-      grid.classList.remove(outClass);
+      // IN: return to normal state
+      grid.classList.remove("is-fading");
     }, ANIM_MS);
   };
 
@@ -110,8 +111,54 @@
   let isPointerDown = false;
   let isHorizontalIntent = false;
 
-  const SWIPE_TRIGGER = 60; // px needed to change slide
-  const INTENT_TRIGGER = 10; // px needed to decide horizontal vs vertical
+  // velocity (flick)
+  let lastX = 0;
+  let lastT = 0;
+  let velocityX = 0;
+
+  // smooth drag (lerp via rAF)
+  let targetOffset = 0;
+  let currentOffset = 0;
+  let rafId = null;
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+  const startRAF = () => {
+    if (rafId) return;
+
+    const tick = () => {
+      // suavização: quanto maior, mais “gruda” no dedo
+      currentOffset += (targetOffset - currentOffset) * 0.35;
+
+      // aplica transform com suavização
+      if (Math.abs(currentOffset) > 0.05) {
+        grid.style.transform = `translateX(${currentOffset}px)`;
+      } else if (!isPointerDown) {
+        grid.style.transform = "";
+      }
+
+      if (isPointerDown || Math.abs(targetOffset - currentOffset) > 0.2) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        rafId = null;
+      }
+    };
+
+    rafId = requestAnimationFrame(tick);
+  };
+
+  const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+
+  // Mobile: mais sensível + permite “flick”
+  const SWIPE_TRIGGER = isCoarse ? 38 : 60; // distância menor no celular
+  const INTENT_TRIGGER = isCoarse ? 6 : 10; // decide intenção mais cedo no celular
+  const VELOCITY_TRIGGER = isCoarse ? 0.35 : 0.55; // px/ms (flick)
+
+  // Quanto o conteúdo acompanha o dedo (sensação de fluidez)
+  const DRAG_MULT = isCoarse ? 0.22 : 0.1;
+
+  // Limite visual para não “amassar” demais
+  const DRAG_CLAMP = isCoarse ? 80 : 50;
 
   const onDown = (e) => {
     if (!canInteract()) return;
@@ -127,6 +174,14 @@
 
     startX = e.clientX;
     startY = e.clientY;
+
+    lastX = startX;
+    lastT = performance.now();
+    velocityX = 0;
+
+    targetOffset = 0;
+    currentOffset = 0;
+    startRAF();
 
     document.body.classList.add("is-dragging");
     railInner.setPointerCapture?.(e.pointerId);
@@ -152,8 +207,15 @@
     e.preventDefault();
     deltaX = dx;
 
-    // Subtle drag feedback (keeps it light)
-    grid.style.transform = `translateX(${dx * 0.08}px)`;
+    // velocity
+    const now = performance.now();
+    const dt = Math.max(8, now - lastT);
+    velocityX = (e.clientX - lastX) / dt; // px/ms
+    lastX = e.clientX;
+    lastT = now;
+
+    // Follow finger (smooth + clamped)
+    targetOffset = clamp(dx * DRAG_MULT, -DRAG_CLAMP, DRAG_CLAMP);
   };
 
   const onUp = () => {
@@ -162,13 +224,16 @@
     document.body.classList.remove("is-dragging");
     isPointerDown = false;
 
-    // Reset drag feedback
-    grid.style.transform = "";
+    // anima de volta pro centro (smooth)
+    targetOffset = 0;
 
     if (!canInteract()) return;
 
-    if (Math.abs(deltaX) >= SWIPE_TRIGGER) {
-      if (deltaX < 0) setIndex(index + 1, "next");
+    const shouldFlipByDistance = Math.abs(deltaX) >= SWIPE_TRIGGER;
+    const shouldFlipByVelocity = Math.abs(velocityX) >= VELOCITY_TRIGGER;
+
+    if (canInteract() && (shouldFlipByDistance || shouldFlipByVelocity)) {
+      if (deltaX < 0 || velocityX < 0) setIndex(index + 1, "next");
       else setIndex(index - 1, "prev");
     }
 
