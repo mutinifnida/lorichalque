@@ -1,33 +1,39 @@
+/* =========================================================
+   Home — Section 2 (Milestones)
+   - Entrance animation (play once)
+   - Click / keyboard toggle for extra text
+   ========================================================= */
+
+/* Entrance animation (play once) */
 (() => {
-  const section2 = document.querySelector(".section-2");
-  if (!section2) return;
+  const section = document.querySelector(".section-2");
+  if (!section) return;
 
   const root = document.body;
-  let hasPlayed = false;
+  let played = false;
 
-  const io = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
+  const observer = new IntersectionObserver(
+    ([entry]) => {
       const isActive = entry.isIntersecting && entry.intersectionRatio >= 0.65;
 
-      // Play only once per page load
-      if (isActive && !hasPlayed) {
+      if (isActive && !played) {
         root.classList.add("home-s2-active");
-        hasPlayed = true;
+        played = true;
       }
     },
     { threshold: [0.2, 0.65, 0.85] }
   );
 
-  io.observe(section2);
+  observer.observe(section);
 })();
 
+/* Milestone cards: toggle text (mouse + keyboard) */
 (() => {
-  const milestones = document.querySelectorAll(".section-2 .milestone");
-  if (!milestones.length) return;
+  const cards = document.querySelectorAll(".section-2 .milestone");
+  if (!cards.length) return;
 
-  milestones.forEach((card) => {
-    // Accessibility without changing HTML structure
+  cards.forEach((card) => {
+    /* Accessibility without changing HTML structure */
     card.setAttribute("role", "button");
     card.setAttribute("tabindex", "0");
 

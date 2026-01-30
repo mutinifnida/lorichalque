@@ -1,10 +1,13 @@
 /* =========================================================
    SERVICES — page-specific styles (V0.1)
    - No mechanical/layout changes.
-   - Cleanup: remove redundant/conflicting blocks, add comments.
+   - Cleanup only: organization + remove literal redundancy.
    ========================================================= */
 
-/* ---------- Scroll snap (Services only) ---------- */
+/* =========================================================
+   Scroll snap (Services only)
+   ========================================================= */
+
 html {
   overscroll-behavior-y: none;
   scroll-snap-type: y mandatory;
@@ -21,7 +24,10 @@ body {
   --nav-hover-color: #c6a15b;
 }
 
-/* ---------- Snap sections ---------- */
+/* =========================================================
+   Snap sections
+   ========================================================= */
+
 .services-page {
   max-width: none;
   margin: 0;
@@ -154,6 +160,8 @@ body.services-footer-active .services-rail {
   right: 0;
   bottom: 18px;
 
+  will-change: transform;
+
   display: flex;
   flex-direction: column; /* rectangle above, dots below */
   align-items: center;
@@ -177,12 +185,7 @@ body.services-footer-active .services-rail {
   transform-origin: bottom;
   transition: height 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
 
-  touch-action: pan-y;
-}
-
-/* Mobile swipe: deixa o browser saber que vertical é scroll,
-   e horizontal a gente controla no JS */
-.services-rail-inner {
+  /* Mobile swipe: vertical scroll stays native; horizontal handled by JS */
   touch-action: pan-y;
 }
 
@@ -194,7 +197,7 @@ body.services-footer-active .services-rail {
 /* Final position: move to center AND grow taller
    NOTE: keeping current values as-is to preserve established behavior. */
 body.services-carousel-active .services-rail {
-  transform: translateY(calc((-50vh + (var(--header-h) / 2)) + 30vh));
+  transform: translate3d(0, calc((-50svh + (var(--header-h) / 2)) + 30svh), 0);
 }
 
 body.services-carousel-active .services-rail-inner {
@@ -474,7 +477,6 @@ body.services-carousel-active .rail-controls {
 
 /* =========================================================
    Microinteractions — Services hero (play once)
-   Triggered by JS adding: body.services-s1-active
    ========================================================= */
 
 @keyframes servicesHeroEnter {

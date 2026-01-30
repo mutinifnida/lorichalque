@@ -1,20 +1,25 @@
+/* =========================================================
+   About — Microinteractions (play once per section)
+   Triggers entrance animations when sections become active.
+   ========================================================= */
 (() => {
   const root = document.body;
 
   const watchOnce = (selector, className) => {
-    const el = document.querySelector(selector);
-    if (!el) return;
+    const section = document.querySelector(selector);
+    if (!section) return;
 
-    let hasPlayed = false;
+    let played = false;
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-
-        // Pre-trigger before the snap lands to avoid flash
-        if (entry.isIntersecting && !hasPlayed) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        /*
+          Pre-trigger before the snap lands to avoid flash
+          and ensure the animation state is applied in advance.
+        */
+        if (entry.isIntersecting && !played) {
           root.classList.add(className);
-          hasPlayed = true;
+          played = true;
         }
       },
       {
@@ -23,7 +28,7 @@
       }
     );
 
-    io.observe(el);
+    observer.observe(section);
   };
 
   watchOnce(".about-s1", "about-s1-active");

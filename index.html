@@ -2,19 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>L'Orichalque</title>
-    <meta name="description" content="L'Orichalque — Insights & Strategy." />
+    <title>L'Orichalque — Strategy, Insights & Intelligence</title>
+    <meta
+      name="description"
+      content="L'Orichalque is a global consultancy in strategy, insights and intelligence, helping organizations make data-driven decisions."
+    />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.lorichalque.com/" />
 
     <!-- Favicon -->
     <link rel="icon" href="assets/favicon/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
-
-    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
-
-    <!-- Android / PWA icons -->
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/icon-192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/icon-512.png" />
 
@@ -31,14 +33,8 @@
   </head>
 
   <body>
-    <!-- =========================================================
-         Header / Navigation (shared across pages)
-         - Desktop: inline navigation
-         - Mobile: hamburger + full-screen drawer
-         ========================================================= -->
     <header class="site-header">
       <div class="header-inner">
-        <!-- Mobile: menu toggle (hamburger / X) -->
         <button
           class="menu-toggle"
           type="button"
@@ -49,12 +45,10 @@
           <span class="menu-toggle-lines" aria-hidden="true"></span>
         </button>
 
-        <!-- Brand / Logo -->
-        <a class="brand" href="./index.html" aria-label="L'Orichalque Home">
+        <a class="brand" href="./index.html" aria-label="L'Orichalque home">
           <span class="brand-logo" aria-hidden="true"></span>
         </a>
 
-        <!-- Mobile drawer navigation -->
         <div class="mobile-drawer" id="mobileMenu" aria-hidden="true">
           <nav class="nav nav--drawer" aria-label="Primary navigation">
             <a class="nav-link" href="./about.html">About</a>
@@ -65,7 +59,6 @@
           <div class="drawer-crystal" aria-hidden="true"></div>
         </div>
 
-        <!-- Desktop navigation -->
         <nav class="nav nav--desktop" aria-label="Primary navigation">
           <a class="nav-link" href="./about.html">About</a>
           <a class="nav-link" href="./services.html">Services</a>
@@ -74,57 +67,50 @@
       </div>
     </header>
 
-    <!-- =========================================================
-         Home (scroll-snap)
-         - Each section defines header colors via data-* attributes.
-         - index-header-theme.js applies these values as CSS variables.
-         ========================================================= -->
     <main class="snap-page" aria-label="Home page">
-      <!-- SECTION 1: Hero -->
+      <!-- Hero -->
       <section
         class="snap-section section-1"
-        aria-label="Hero"
+        aria-labelledby="hero-title"
         data-brand="#e2360e"
         data-nav="#726e75"
         data-nav-hover="#e2360e"
       >
         <div class="section-inner hero">
-          <h1 class="hero-title">
+          <h1 class="hero-title" id="hero-title">
             Insights and advisory to make <span class="hero-accent">data-driven</span> decisions.
           </h1>
 
           <p class="hero-subtitle">A global consultancy in strategy, insights and intelligence.</p>
 
-          <a class="cta cta--hero" href="./services.html">EXPLORE OUR SERVICES</a>
+          <a class="cta cta--hero" href="./services.html">Explore our services</a>
 
-          <!-- Decorative complement (masked SVG via CSS) -->
           <span class="hero-complement" aria-hidden="true"></span>
         </div>
       </section>
 
-      <!-- SECTION 2: Milestones -->
+      <!-- Milestones -->
       <section
         class="snap-section section-2"
-        aria-label="Milestones"
+        aria-labelledby="milestones-title"
         data-brand="#e3e3e3"
         data-nav="#e3e3e3"
         data-nav-hover="#121113"
       >
         <div class="section-inner milestones">
+          <h2 class="visually-hidden" id="milestones-title">Key milestones</h2>
+
           <div class="milestones-grid">
             <article class="milestone">
-              <!-- Placeholder for future icon/animation -->
               <div class="milestone-media" aria-hidden="true"></div>
-
               <div class="milestone-content">
                 <h3 class="milestone-title"><span class="highlight">Global</span> Operations</h3>
-                <p class="milestone-text">International Reach - Active across all continents</p>
+                <p class="milestone-text">International reach across all continents</p>
               </div>
             </article>
 
             <article class="milestone">
               <div class="milestone-media" aria-hidden="true"></div>
-
               <div class="milestone-content">
                 <h3 class="milestone-title">
                   <span class="highlight">15+ Years</span><br />
@@ -136,33 +122,31 @@
 
             <article class="milestone">
               <div class="milestone-media" aria-hidden="true"></div>
-
               <div class="milestone-content">
                 <h3 class="milestone-title">
-                  Multi-Industry <span class="highlight">Expertise</span>
+                  Multi-industry <span class="highlight">expertise</span>
                 </h3>
-                <p class="milestone-text">Supply Chain, FMCG, Technology and more</p>
+                <p class="milestone-text">Supply chain, FMCG, technology and more</p>
               </div>
             </article>
 
             <article class="milestone">
               <div class="milestone-media" aria-hidden="true"></div>
-
               <div class="milestone-content">
                 <h3 class="milestone-title">
-                  Taylor-Made <span class="highlight">Solutions</span>
+                  Tailor-made <span class="highlight">solutions</span>
                 </h3>
-                <p class="milestone-text">To help your business achieve its full potential</p>
+                <p class="milestone-text">Designed to unlock your business full potential</p>
               </div>
             </article>
           </div>
         </div>
       </section>
 
-      <!-- SECTION 3: Differentiator -->
+      <!-- Differentiator -->
       <section
         class="snap-section section-3"
-        aria-label="Differentiator"
+        aria-labelledby="diff-title"
         data-brand="#e3e3e3"
         data-nav="#e3e3e3"
         data-nav-hover="#c6a15b"
@@ -170,33 +154,35 @@
         <div class="section-inner differentiator">
           <div class="diff-col diff-col--left">
             <p class="kicker">Differentiator</p>
-            <h2 class="diff-title">Strategy applied to real business contexts.</h2>
+            <h2 class="diff-title" id="diff-title">Strategy applied to real business contexts.</h2>
           </div>
 
           <div class="diff-col diff-col--right">
             <p class="diff-text">
               We operate through a direct, responsible and customizable approach, combining
-              technology, market intelligence with global experience to support business's decisions
-              that demand clarity and precision.
+              technology and market intelligence with global experience to support decisions that
+              demand clarity and precision.
             </p>
-            <a class="cta cta--diff" href="./contact.html">CONTACT US</a>
+            <a class="cta cta--diff" href="./contact.html">Contact us</a>
           </div>
         </div>
       </section>
 
-      <!-- FOOTER: auto-height snap section -->
-      <section class="snap-section snap-section--auto footer-section" aria-label="Footer section">
-        <footer class="site-footer" aria-label="Footer">
+      <!-- Footer -->
+      <section class="snap-section snap-section--auto footer-section" aria-label="Footer">
+        <footer class="site-footer">
           <div class="section-inner footer-inner">
             <div class="footer-footnote">
               <p class="footnote-text">
                 <span class="footnote-main"> © 2026 L'Orichalque. All rights reserved. </span>
               </p>
             </div>
+
             <img
               class="footnote-logo"
               src="./assets/svg/footnote-bolachas.svg"
-              alt="Estúdio Bolachas"
+              alt="Developed by Estúdio Bolachas"
+              loading="lazy"
             />
           </div>
         </footer>

@@ -1,17 +1,14 @@
 /* =========================================================
-   HOME (index.css) — Page-specific styles
-   - Keeps scroll-snap behavior and section visuals.
-   - Does not alter established layout/mechanics.
+   HOME — page-specific styles
    ========================================================= */
 
-/* ---------- Scroll snap (Home only) ---------- */
+/* Scroll snap (Home only) */
 html {
   overscroll-behavior-y: none;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
 
-/* Home defaults / fallback theme (actual header colors are set per section via data-*) */
 body {
   --brand-color: #e3e3e3;
   --brand-size: 120px;
@@ -36,17 +33,19 @@ body {
   padding-top: var(--header-h);
 }
 
-/* Auto-height snap section (footer) */
 .snap-section--auto {
   min-height: auto;
   padding-top: 0;
 }
 
-/* ---------- Section backgrounds ---------- */
+/* =========================================================
+   Section backgrounds
+   ========================================================= */
+
 .section-1 {
   background: #e3e3e3;
   --hero-accent: #e2360e;
-  position: relative; /* anchor for hero-complement (desktop) */
+  position: relative;
 }
 
 .section-2 {
@@ -73,7 +72,6 @@ body {
 .hero-title {
   margin: 0;
   color: #121113;
-
   font-size: clamp(48px, 7vw, 92px);
   letter-spacing: 0.01em;
   line-height: 1.2;
@@ -81,28 +79,25 @@ body {
 }
 
 .hero-accent {
-  color: var(--hero-accent, #e3e3e3);
+  color: var(--hero-accent);
 }
 
 .hero-subtitle {
   margin-top: 2vh;
-
   color: #726e75;
   font-size: clamp(14px, 2.2vw, 20px);
   line-height: 1.35;
   max-width: 72ch;
 }
 
-/* CTA (hero) */
+/* CTA — Hero */
 .cta--hero {
   margin-top: 16px;
   margin-bottom: 40px;
-
   background: #121113;
   color: #e3e3e3;
 }
 
-/* CTA hover (desktop) */
 @media (hover: hover) and (pointer: fine) {
   .cta--hero:hover {
     background: #c6a15b;
@@ -110,34 +105,22 @@ body {
   }
 }
 
-/* CTA active / focus */
-.cta--hero:active {
+.cta--hero:active,
+.cta--hero:focus-visible {
   background: #121113;
   color: #c6a15b;
   transform: translateY(1px);
 }
 
-.cta--hero:focus-visible {
-  background: #121113;
-  color: #c6a15b;
-}
-
-/* Decorative complement (masked SVG) */
+/* Decorative complement */
 .hero-complement {
   display: block;
   width: 140px;
   height: 140px;
-
   background-color: var(--brand-color);
 
-  -webkit-mask-image: url("../assets/svg/crystal.svg");
-  mask-image: url("../assets/svg/crystal.svg");
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
+  -webkit-mask: url("../assets/svg/crystal.svg") no-repeat center / contain;
+  mask: url("../assets/svg/crystal.svg") no-repeat center / contain;
 }
 
 /* =========================================================
@@ -152,32 +135,17 @@ body {
   gap: 18px;
 }
 
-.milestones-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-/* Label (body font, like About kicker) */
-.milestones-kicker {
-  margin: 0 0 24px;
-  font-family: "Golos Text", sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(11, 13, 18, 0.65);
-}
-
 .milestones-grid {
   display: grid;
-  gap: 12px;
   grid-template-columns: 1fr;
+  gap: 12px;
 }
 
 .milestone {
-  background: transparent;
-  padding: 14px 0px;
+  position: relative;
+  overflow: hidden;
+  padding: 14px 0;
+  cursor: pointer;
 }
 
 .milestone-title {
@@ -194,6 +162,18 @@ body {
   color: #e3e3e3;
   font-size: clamp(10px, 3vw, 18px);
   max-width: 60ch;
+
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 260ms ease,
+    opacity 220ms ease;
+}
+
+.milestone.is-open .milestone-text {
+  max-height: 200px;
+  opacity: 1;
 }
 
 .highlight {
@@ -201,46 +181,28 @@ body {
   white-space: nowrap;
 }
 
-/* =========================================================
-   Microinteractions — Home / Section 2 (Milestones)
-   - Play once when section enters focus (via JS class)
-   - Reveal mask: left -> right, staggered
-   - Hover: invert title/highlight (desktop)
-   - Click: toggle subtitle (milestone-text)
-   ========================================================= */
-
-/* Base: make each milestone clip its own reveal mask */
-.section-2 .milestone {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-/* Reveal mask (covers content, then slides away left->right via scaleX) */
+/* Reveal mask */
 .section-2 .milestone::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: #e2360e; /* must match section-2 background */
+  background: #e2360e;
   transform-origin: left;
   transform: scaleX(1);
   z-index: 2;
   pointer-events: none;
 }
 
-/* Ensure milestone content stays above background but below mask */
 .section-2 .milestone-content,
 .section-2 .milestone-media {
   position: relative;
   z-index: 1;
 }
 
-/* Triggered by JS: run reveal animation once */
 body.home-s2-active .section-2 .milestone::before {
   animation: milestoneReveal 900ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
-/* Stagger order (DOM order = left->right, top->bottom) */
 body.home-s2-active .section-2 .milestone:nth-child(1)::before {
   animation-delay: 120ms;
 }
@@ -260,44 +222,24 @@ body.home-s2-active .section-2 .milestone:nth-child(4)::before {
   }
 }
 
-/* --- Hover invert (desktop only) ---
-   Normal: title=#121113, highlight=#e2360e
-   Hover:  title=#e2360e, highlight=#121113
-*/
 @media (hover: hover) and (pointer: fine) {
   .section-2 .milestone:hover .milestone-title {
     color: #121113;
   }
+
   .section-2 .milestone:hover .highlight {
     color: #e3e3e3;
   }
 }
 
-/* --- Click to reveal subtitle (milestone-text) ---
-   Default: hidden
-*/
-.section-2 .milestone-text {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition:
-    max-height 260ms ease,
-    opacity 220ms ease;
-}
-
-/* Open state */
-.section-2 .milestone.is-open .milestone-text {
-  max-height: 200px;
-  opacity: 1;
-}
-
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .section-2 .milestone::before {
-    animation: none !important;
+    animation: none;
     transform: scaleX(0);
   }
-  .section-2 .milestone-text {
+
+  .milestone-text {
     transition: none;
   }
 }
@@ -321,8 +263,8 @@ body.home-s2-active .section-2 .milestone:nth-child(4)::before {
 }
 
 .diff-title {
-  color: #e2360e;
   margin: 0;
+  color: #e2360e;
   max-width: 24ch;
   font-size: clamp(48px, 7vw, 92px);
   letter-spacing: 0.01em;
@@ -330,26 +272,44 @@ body.home-s2-active .section-2 .milestone:nth-child(4)::before {
 }
 
 .diff-text {
-  color: #e3e3e3;
   margin: 0;
+  color: #e3e3e3;
   font-size: 16px;
   line-height: 1.6;
   max-width: 62ch;
+}
+
+/* CTA — Differentiator */
+.cta--diff {
+  margin-top: 18px;
+  background: #c6a15b;
+  color: #121113;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta--diff:hover {
+    background: #e2360e;
+    color: #e3e3e3;
+  }
+}
+
+.cta--diff:active,
+.cta--diff:focus-visible {
+  background: #e3e3e3;
+  color: #e2360e;
+  border-color: #e2360e;
 }
 
 /* =========================================================
    RESPONSIVE
    ========================================================= */
 
-/* Desktop upgrades */
 @media (min-width: 768px) {
-  .hero-title {
-    font-size: 64px;
-  }
-
   .milestones-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 50px;
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
   .differentiator {
@@ -362,33 +322,21 @@ body.home-s2-active .section-2 .milestone:nth-child(4)::before {
   .diff-col--left {
     padding-right: 20px;
   }
-
   .diff-col--right {
     padding-left: 20px;
   }
 
-  .diff-title {
-    font-size: 44px;
-  }
-
-  .diff-text {
-    font-size: 17px;
-  }
-
-  /* Complement position (desktop) */
   .hero-complement {
     position: absolute;
     right: 40px;
     bottom: 20px;
-    margin: 0;
     width: 120px;
     height: 120px;
+    margin: 0;
   }
 }
 
-/* Mobile refinements (vertical) */
 @media (max-width: 767px) {
-  /* Shared hero width (title/subtitle/button) */
   .section-1 {
     --hero-block-w: min(92vw, 520px);
   }
@@ -400,26 +348,20 @@ body.home-s2-active .section-2 .milestone:nth-child(4)::before {
 
   .hero-subtitle {
     max-width: var(--hero-block-w);
-    width: 100%;
     font-size: clamp(16px, 4.2vw, 20px);
   }
 
   .cta--hero {
     width: var(--hero-block-w);
     justify-content: center;
-    box-sizing: border-box;
-
     white-space: nowrap;
-    padding-left: 18px;
-    padding-right: 18px;
-
+    padding-inline: 18px;
     letter-spacing: 0.1em;
     font-size: 14px;
   }
 
-  /* Complement (mobile): below the CTA, towards the bottom */
   .hero-complement {
-    margin-top: auto; /* push towards the bottom of the hero column */
+    margin-top: auto;
     align-self: center;
     margin-bottom: 14px;
     width: 120px;
@@ -428,8 +370,7 @@ body.home-s2-active .section-2 .milestone:nth-child(4)::before {
 }
 
 /* =========================================================
-   Microinteractions — Home / Section 1 (on enter)
-   Triggered by JS adding/removing body.home-s1-active
+   Microinteractions — Section 1
    ========================================================= */
 
 .section-1 .hero-title,
@@ -439,7 +380,6 @@ body.home-s2-active .section-2 .milestone:nth-child(4)::before {
   transform: none;
 }
 
-/* Animate when section 1 becomes active */
 body.home-s1-active .section-1 .hero-title,
 body.home-s1-active .section-1 .hero-subtitle,
 body.home-s1-active .section-1 .cta--hero {
@@ -465,7 +405,6 @@ body.home-s1-active .section-1 .cta--hero {
   }
 }
 
-/* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   body.home-s1-active .section-1 .hero-title,
   body.home-s1-active .section-1 .hero-subtitle,
@@ -476,40 +415,8 @@ body.home-s1-active .section-1 .cta--hero {
   }
 }
 
-/* Section 2 — align milestones grid with header width */
-@media (min-width: 768px) {
-  .milestones-grid {
-    max-width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-/* Section 3 CTA (same logic as Section 1 CTA, adapted) */
-.cta--diff {
-  margin-top: 18px;
-
-  background: #c6a15b;
-  color: #121113;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .cta--diff:hover {
-    background: #e2360e;
-    color: #e3e3e3;
-  }
-}
-
-.cta--diff:active,
-.cta--diff:focus-visible {
-  background: #e3e3e3;
-  color: #e2360e;
-  border-color: #e2360e;
-}
-
 /* =========================================================
-   Microinteractions — Home / Section 3 (Differentiator)
-   Triggered by JS adding body.home-s3-active (play once)
+   Microinteractions — Section 3
    ========================================================= */
 
 .section-3 .kicker,
@@ -532,15 +439,12 @@ body.home-s3-active .section-3 .cta--diff {
 body.home-s3-active .section-3 .kicker {
   animation-delay: 120ms;
 }
-
 body.home-s3-active .section-3 .diff-title {
   animation-delay: 320ms;
 }
-
 body.home-s3-active .section-3 .diff-text {
   animation-delay: 520ms;
 }
-
 body.home-s3-active .section-3 .cta--diff {
   animation-delay: 720ms;
 }
@@ -563,7 +467,7 @@ body.home-s3-active .section-3 .cta--diff {
   }
 }
 
-/* Prevent 1-frame flash on mobile before IO triggers */
+/* Prevent flash before IO triggers (mobile) */
 @media (max-width: 767px) {
   body:not(.home-s3-active) .section-3 .kicker,
   body:not(.home-s3-active) .section-3 .diff-title,

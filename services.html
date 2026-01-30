@@ -1,20 +1,22 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Meta -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Services — L'Orichalque</title>
-    <meta name="description" content="Services — L'Orichalque." />
+    <meta
+      name="description"
+      content="Discover L'Orichalque services — customizable strategy, intelligence and advisory solutions designed to support efficient, data-driven decision-making."
+    />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.lorichalque.com/services.html" />
 
     <!-- Favicon -->
     <link rel="icon" href="assets/favicon/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
-
-    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
-
-    <!-- Android / PWA icons -->
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/icon-192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/icon-512.png" />
 
@@ -30,12 +32,8 @@
   </head>
 
   <body>
-    <!-- =========================================================
-         HEADER / NAVIGATION (shared)
-         ========================================================= -->
     <header class="site-header">
       <div class="header-inner">
-        <!-- Mobile hamburger -->
         <button
           class="menu-toggle"
           type="button"
@@ -46,12 +44,10 @@
           <span class="menu-toggle-lines" aria-hidden="true"></span>
         </button>
 
-        <!-- Brand -->
-        <a class="brand" href="./index.html" aria-label="L'Orichalque Home">
+        <a class="brand" href="./index.html" aria-label="L'Orichalque home">
           <span class="brand-logo" aria-hidden="true"></span>
         </a>
 
-        <!-- Mobile drawer -->
         <div class="mobile-drawer" id="mobileMenu" aria-hidden="true">
           <nav class="nav nav--drawer" aria-label="Primary navigation">
             <a class="nav-link" href="./about.html">About</a>
@@ -62,7 +58,6 @@
           <div class="drawer-crystal" aria-hidden="true"></div>
         </div>
 
-        <!-- Desktop navigation -->
         <nav class="nav nav--desktop" aria-label="Primary navigation">
           <a class="nav-link" href="./about.html">About</a>
           <a class="nav-link" href="./services.html" aria-current="page">Services</a>
@@ -71,20 +66,13 @@
       </div>
     </header>
 
-    <!-- =========================================================
-         MAIN (scroll snap)
-         - Screen 1: hero
-         - Screen 2: carousel "stage"
-         - Overlay: expanding rail (fixed)
-         - Footer: auto-height snap section
-         ========================================================= -->
     <main class="snap-page services-page" aria-label="Services page">
-      <!-- Screen 1: Hero -->
-      <section class="snap-section services-hero-screen" aria-label="Services hero">
+      <!-- Hero -->
+      <section class="snap-section services-hero-screen" aria-labelledby="services-hero-title">
         <div class="section-inner services-inner">
           <div class="services-hero">
             <div class="services-hero-title">
-              <h1 class="services-title">Customizable Services</h1>
+              <h1 class="services-title" id="services-hero-title">Customizable Services</h1>
             </div>
 
             <div class="services-hero-text">
@@ -99,14 +87,12 @@
         </div>
       </section>
 
-      <!-- Screen 2: Carousel -->
-      <section class="snap-section services-carousel-screen" aria-label="Services carousel">
-        <div class="section-inner services-inner">
-          <!-- intentionally empty: the carousel is rendered in the fixed rail overlay -->
-        </div>
+      <!-- Carousel stage (empty by design; content lives in fixed rail) -->
+      <section class="snap-section services-carousel-screen" aria-label="Services carousel stage">
+        <div class="section-inner services-inner"></div>
       </section>
 
-      <!-- Fixed overlay: expanding rail + arrows + dots -->
+      <!-- Fixed rail overlay -->
       <div class="services-rail" aria-hidden="true">
         <div class="services-rail-inner">
           <div class="services-rail-content" aria-hidden="true">
@@ -122,12 +108,12 @@
             </div>
           </div>
 
-          <!-- CTA Button - CONTACT -->
+          <!-- CTA -->
           <div class="services-cta-wrapper">
-            <a class="cta cta--services" href="./contact.html"> CONTACT US </a>
+            <a class="cta cta--services" href="./contact.html">Contact us</a>
           </div>
 
-          <!-- Rail navigation arrows (desktop + after expansion) -->
+          <!-- Navigation arrows -->
           <button
             class="rail-arrow-btn rail-arrow-btn--prev"
             type="button"
@@ -151,7 +137,7 @@
           </button>
         </div>
 
-        <!-- Dots (appear after expansion) -->
+        <!-- Dots -->
         <div class="rail-controls" aria-hidden="true">
           <div class="rail-dots" data-rail-dots></div>
         </div>

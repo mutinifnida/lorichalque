@@ -1,20 +1,22 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Meta -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>About — L'Orichalque</title>
-    <meta name="description" content="Who we are — L'Orichalque." />
+    <meta
+      name="description"
+      content="Learn who we are at L'Orichalque — a global consultancy in strategy, insights and intelligence focused on efficiency, clarity and responsible decision-making."
+    />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.lorichalque.com/about.html" />
 
     <!-- Favicon -->
     <link rel="icon" href="assets/favicon/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
-
-    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
-
-    <!-- Android / PWA icons -->
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/icon-192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/icon-512.png" />
 
@@ -29,12 +31,8 @@
   </head>
 
   <body>
-    <!-- =========================================================
-         HEADER / MAIN NAVIGATION
-         ========================================================= -->
     <header class="site-header">
       <div class="header-inner">
-        <!-- Mobile hamburger -->
         <button
           class="menu-toggle"
           type="button"
@@ -45,12 +43,10 @@
           <span class="menu-toggle-lines" aria-hidden="true"></span>
         </button>
 
-        <!-- Brand -->
-        <a class="brand" href="./index.html" aria-label="L'Orichalque Home">
+        <a class="brand" href="./index.html" aria-label="L'Orichalque home">
           <span class="brand-logo" aria-hidden="true"></span>
         </a>
 
-        <!-- Mobile drawer -->
         <div class="mobile-drawer" id="mobileMenu" aria-hidden="true">
           <nav class="nav nav--drawer" aria-label="Primary navigation">
             <a class="nav-link" href="./about.html" aria-current="page">About</a>
@@ -61,7 +57,6 @@
           <div class="drawer-crystal" aria-hidden="true"></div>
         </div>
 
-        <!-- Desktop navigation -->
         <nav class="nav nav--desktop" aria-label="Primary navigation">
           <a class="nav-link" href="./about.html" aria-current="page">About</a>
           <a class="nav-link" href="./services.html">Services</a>
@@ -70,14 +65,11 @@
       </div>
     </header>
 
-    <!-- =========================================================
-         MAIN CONTENT — ABOUT (SCROLL SNAP)
-         ========================================================= -->
     <main class="snap-page about-snap" aria-label="About page">
-      <!-- ================= SECTION 1 ================= -->
+      <!-- Section 1 -->
       <section
         class="snap-section about-section about-s1"
-        aria-label="Who we are - block 1"
+        aria-labelledby="about-s1-title"
         data-brand="#e3e3e3"
         data-nav="#e3e3e3"
         data-nav-hover="#121113"
@@ -88,7 +80,9 @@
           </header>
 
           <section class="about-block">
-            <h2 class="about-block-title">Efficiency applied to decision-making</h2>
+            <h2 class="about-block-title" id="about-s1-title">
+              Efficiency applied to decision-making
+            </h2>
             <p class="about-block-text">
               L’Orichalque is a global strategy and insights consultancy that supports organizations
               in critical decision-making. We focus on efficiency, strategic clarity, and
@@ -98,17 +92,19 @@
         </div>
       </section>
 
-      <!-- ================= SECTION 2 (REVERSED) ================= -->
+      <!-- Section 2 -->
       <section
         class="snap-section about-section about-s2"
-        aria-label="Who we are - block 2"
+        aria-labelledby="about-s2-title"
         data-brand="#121113"
         data-nav="#121113"
         data-nav-hover="#e2360e"
       >
         <div class="section-inner about-panel">
           <section class="about-block about-block--reverse">
-            <h2 class="about-block-title">Strategic intelligence with a global perspective</h2>
+            <h2 class="about-block-title" id="about-s2-title">
+              Strategic intelligence with a global perspective
+            </h2>
             <p class="about-block-text">
               With multi-sector experience and international operations, we transform data, market
               intelligence and strategic insights into clear, actionable direction aligned with the
@@ -119,31 +115,33 @@
         </div>
       </section>
 
-      <!-- ================= SECTION 3 ================= -->
+      <!-- Section 3 -->
       <section
         class="snap-section about-section about-s3"
-        aria-label="Who we are - block 3"
+        aria-labelledby="about-s3-title"
         data-brand="#e3e3e3"
         data-nav="#e3e3e3"
         data-nav-hover="#c6a15b"
       >
         <div class="section-inner about-panel">
           <section class="about-block">
-            <h2 class="about-block-title">Reliability, proximity and responsibility</h2>
+            <h2 class="about-block-title" id="about-s3-title">
+              Reliability, proximity and responsibility
+            </h2>
             <p class="about-block-text">
               We believe reliability and efficiency go hand in hand. For this reason, we adopt a
               direct, serious and responsible approach, working closely with leadership teams and
               decision-makers. L’Orichalque exists to support organizations seeking scalability,
               consistency and expertise in a constantly evolving global market.
             </p>
-            <a class="cta cta--about" href="./services.html"> EXPLORE OUR SERVICES </a>
+            <a class="cta cta--about" href="./services.html">Explore our services</a>
           </section>
         </div>
       </section>
 
-      <!-- ================= FOOTER ================= -->
-      <section class="snap-section snap-section--auto footer-section" aria-label="Footer section">
-        <footer class="site-footer" aria-label="Footer">
+      <!-- Footer -->
+      <section class="snap-section snap-section--auto footer-section" aria-label="Footer">
+        <footer class="site-footer">
           <div class="section-inner footer-inner">
             <div class="footer-footnote">
               <p class="footnote-text">
@@ -153,7 +151,8 @@
             <img
               class="footnote-logo"
               src="./assets/svg/footnote-bolachas.svg"
-              alt="Estúdio Bolachas"
+              alt="Developed by Estúdio Bolachas"
+              loading="lazy"
             />
           </div>
         </footer>

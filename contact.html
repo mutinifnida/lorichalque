@@ -1,20 +1,22 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Meta -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Contact — L'Orichalque</title>
-    <meta name="description" content="Contact — L'Orichalque." />
+    <meta
+      name="description"
+      content="Contact L'Orichalque — send us an email or connect on LinkedIn to start a meaningful conversation about strategy, insights and intelligence."
+    />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://www.lorichalque.com/contact.html" />
 
     <!-- Favicon -->
     <link rel="icon" href="assets/favicon/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
-
-    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
-
-    <!-- Android / PWA icons -->
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/icon-192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/icon-512.png" />
 
@@ -25,15 +27,12 @@
     <!-- Scripts -->
     <script defer src="./js/global.js"></script>
     <script defer src="./js/contact-micro.js"></script>
+    <script defer src="./js/contact-form.js"></script>
   </head>
 
   <body>
-    <!-- =========================================================
-         HEADER / NAVIGATION (shared)
-         ========================================================= -->
     <header class="site-header">
       <div class="header-inner">
-        <!-- Mobile hamburger -->
         <button
           class="menu-toggle"
           type="button"
@@ -44,12 +43,10 @@
           <span class="menu-toggle-lines" aria-hidden="true"></span>
         </button>
 
-        <!-- Brand -->
-        <a class="brand" href="./index.html" aria-label="L'Orichalque Home">
+        <a class="brand" href="./index.html" aria-label="L'Orichalque home">
           <span class="brand-logo" aria-hidden="true"></span>
         </a>
 
-        <!-- Mobile drawer -->
         <div class="mobile-drawer" id="mobileMenu" aria-hidden="true">
           <nav class="nav nav--drawer" aria-label="Primary navigation">
             <a class="nav-link" href="./about.html">About</a>
@@ -60,7 +57,6 @@
           <div class="drawer-crystal" aria-hidden="true"></div>
         </div>
 
-        <!-- Desktop navigation -->
         <nav class="nav nav--desktop" aria-label="Primary navigation">
           <a class="nav-link" href="./about.html">About</a>
           <a class="nav-link" href="./services.html">Services</a>
@@ -69,17 +65,13 @@
       </div>
     </header>
 
-    <!-- =========================================================
-         MAIN (scroll snap + footer reveal)
-         ========================================================= -->
     <main class="snap-page contact-page" aria-label="Contact page">
-      <!-- Screen 1: Contact -->
-      <section class="snap-section contact-screen" aria-label="Contact content">
+      <section class="snap-section contact-screen" aria-labelledby="contact-title">
         <div class="section-inner contact-inner">
           <div class="contact-grid">
-            <!-- Left column -->
             <div class="contact-left">
-              <h1 class="contact-title">Let’s talk!</h1>
+              <h1 class="contact-title" id="contact-title">Let’s talk!</h1>
+
               <p class="contact-text">
                 Every strategic decision starts with a meaningful conversation.
               </p>
@@ -87,9 +79,9 @@
               <div class="contact-links">
                 <div class="contact-line">
                   <span class="contact-label">Send us an email:</span>
-                  <a class="contact-email-link" href="mailto:hello@lorichalque.com"
-                    >hello@lorichalque.com</a
-                  >
+                  <a class="contact-email-link" href="mailto:hello@lorichalque.com">
+                    hello@lorichalque.com
+                  </a>
                 </div>
 
                 <div class="contact-line">
@@ -99,15 +91,30 @@
                     href="https://www.linkedin.com/company/lorichalque/"
                     target="_blank"
                     rel="noopener"
-                    >LinkedIn</a
                   >
+                    LinkedIn
+                  </a>
+                  <span class="contact-label">.</span>
                 </div>
               </div>
             </div>
 
-            <!-- Right column: form -->
             <div class="contact-right">
-              <form class="contact-form" autocomplete="on">
+              <form
+                class="contact-form"
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+                autocomplete="on"
+              >
+                <!-- required for Netlify Forms -->
+                <input type="hidden" name="form-name" value="contact" />
+                <!-- honeypot (anti-spam) -->
+                <p class="visually-hidden">
+                  <label> Don’t fill this out: <input name="bot-field" /> </label>
+                </p>
+
                 <label class="field">
                   <span class="label">Name</span>
                   <input class="input" type="text" name="name" autocomplete="name" required />
@@ -119,7 +126,7 @@
                 </label>
 
                 <label class="field">
-                  <span class="label">E-mail</span>
+                  <span class="label">Email</span>
                   <input class="input" type="email" name="email" autocomplete="email" required />
                 </label>
 
@@ -135,6 +142,9 @@
 
                 <button class="cta contact-send" type="submit">Send</button>
 
+                <!-- NEW: inline status message -->
+                <p class="contact-status" role="status" aria-live="polite"></p>
+
                 <p class="contact-note">
                   *All information is treated with discretion and confidentiality.
                 </p>
@@ -144,19 +154,19 @@
         </div>
       </section>
 
-      <!-- Screen 2: Footer (auto height) -->
-      <section class="snap-section snap-section--auto footer-section" aria-label="Footer section">
-        <footer class="site-footer" aria-label="Footer">
+      <section class="snap-section snap-section--auto footer-section" aria-label="Footer">
+        <footer class="site-footer">
           <div class="section-inner footer-inner">
             <div class="footer-footnote">
               <p class="footnote-text">
-                <span class="footnote-main"> © 2026 L'Orichalque. All rights reserved. </span>
+                <span class="footnote-main">© 2026 L'Orichalque. All rights reserved.</span>
               </p>
             </div>
             <img
               class="footnote-logo"
               src="./assets/svg/footnote-bolachas.svg"
-              alt="Estúdio Bolachas"
+              alt="Developed by Estúdio Bolachas"
+              loading="lazy"
             />
           </div>
         </footer>

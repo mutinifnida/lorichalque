@@ -1,11 +1,10 @@
 /* =========================================================
-   Services (V0.1) — Carousel controller
-   - Prev/Next arrows (data-rail-prev / data-rail-next)
-   - Dots (data-rail-dots)
-   - Swipe/drag on the rail (pointer events)
-   - Transition: OUT slides in swipe direction + fades (CSS classes)
+   Services — Carousel controller
+   - Prev / Next arrows
+   - Dots navigation
+   - Swipe / drag (pointer events)
+   - Fade-only transitions
    ========================================================= */
-
 (() => {
   const titleEl = document.getElementById("railTitle");
   const textEl = document.getElementById("railText");
@@ -16,7 +15,7 @@
 
   if (!titleEl || !textEl || !prevBtn || !nextBtn || !dotsWrap || !grid) return;
 
-  const ANIM_MS = 220; // must match CSS transition timing
+  const ANIM_MS = 220; // must match CSS timing
 
   const items = [
     {
@@ -69,22 +68,16 @@
   const setIndex = (i, _direction = "next") => {
     index = (i + items.length) % items.length;
 
-    // OUT (simple fade only)
     clearAnim();
 
-    // Ensure any drag feedback transform doesn't persist into the fade.
     grid.style.transform = "";
     grid.classList.add("is-fading");
 
     window.setTimeout(() => {
-      // Swap copy
       titleEl.textContent = items[index].title;
       textEl.textContent = items[index].text;
 
-      // Update dots
       syncDots();
-
-      // IN: return to normal state
       grid.classList.remove("is-fading");
     }, ANIM_MS);
   };
@@ -99,8 +92,6 @@
 
   /* =========================================================
      Swipe / Drag (Pointer Events)
-     - Dragging is enabled only when carousel screen is active.
-     - Ignore pointerdown on controls to preserve clicks on desktop.
      ========================================================= */
   const railInner = document.querySelector(".services-rail-inner");
   if (!railInner) return;
@@ -111,12 +102,10 @@
   let isPointerDown = false;
   let isHorizontalIntent = false;
 
-  // velocity (flick)
   let lastX = 0;
   let lastT = 0;
   let velocityX = 0;
 
-  // smooth drag (lerp via rAF)
   let targetOffset = 0;
   let currentOffset = 0;
   let rafId = null;
@@ -127,10 +116,8 @@
     if (rafId) return;
 
     const tick = () => {
-      // suavização: quanto maior, mais “gruda” no dedo
       currentOffset += (targetOffset - currentOffset) * 0.35;
 
-      // aplica transform com suavização
       if (Math.abs(currentOffset) > 0.05) {
         grid.style.transform = `translateX(${currentOffset}px)`;
       } else if (!isPointerDown) {
@@ -149,21 +136,16 @@
 
   const isCoarse = window.matchMedia("(pointer: coarse)").matches;
 
-  // Mobile: mais sensível + permite “flick”
-  const SWIPE_TRIGGER = isCoarse ? 38 : 60; // distância menor no celular
-  const INTENT_TRIGGER = isCoarse ? 6 : 10; // decide intenção mais cedo no celular
-  const VELOCITY_TRIGGER = isCoarse ? 0.35 : 0.55; // px/ms (flick)
+  const SWIPE_TRIGGER = isCoarse ? 38 : 60;
+  const INTENT_TRIGGER = isCoarse ? 6 : 10;
+  const VELOCITY_TRIGGER = isCoarse ? 0.35 : 0.55;
 
-  // Quanto o conteúdo acompanha o dedo (sensação de fluidez)
   const DRAG_MULT = isCoarse ? 0.22 : 0.1;
-
-  // Limite visual para não “amassar” demais
   const DRAG_CLAMP = isCoarse ? 80 : 50;
 
   const onDown = (e) => {
     if (!canInteract()) return;
 
-    // Do not start drag-capture on arrow buttons or dots (keeps click working).
     if (e.target.closest("[data-rail-prev], [data-rail-next], .rail-dot, [data-rail-dots]")) {
       return;
     }
@@ -193,12 +175,11 @@
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
 
-    // Decide intent once (horizontal vs vertical).
     if (!isHorizontalIntent) {
       if (Math.abs(dx) > INTENT_TRIGGER && Math.abs(dx) > Math.abs(dy) + 4) {
         isHorizontalIntent = true;
       } else if (Math.abs(dy) > INTENT_TRIGGER && Math.abs(dy) > Math.abs(dx) + 4) {
-        return; // vertical scroll intent
+        return;
       }
     }
 
@@ -207,14 +188,13 @@
     e.preventDefault();
     deltaX = dx;
 
-    // velocity
     const now = performance.now();
     const dt = Math.max(8, now - lastT);
-    velocityX = (e.clientX - lastX) / dt; // px/ms
+    velocityX = (e.clientX - lastX) / dt;
+
     lastX = e.clientX;
     lastT = now;
 
-    // Follow finger (smooth + clamped)
     targetOffset = clamp(dx * DRAG_MULT, -DRAG_CLAMP, DRAG_CLAMP);
   };
 
@@ -223,8 +203,6 @@
 
     document.body.classList.remove("is-dragging");
     isPointerDown = false;
-
-    // anima de volta pro centro (smooth)
     targetOffset = 0;
 
     if (!canInteract()) return;
@@ -232,7 +210,7 @@
     const shouldFlipByDistance = Math.abs(deltaX) >= SWIPE_TRIGGER;
     const shouldFlipByVelocity = Math.abs(velocityX) >= VELOCITY_TRIGGER;
 
-    if (canInteract() && (shouldFlipByDistance || shouldFlipByVelocity)) {
+    if (shouldFlipByDistance || shouldFlipByVelocity) {
       if (deltaX < 0 || velocityX < 0) setIndex(index + 1, "next");
       else setIndex(index - 1, "prev");
     }

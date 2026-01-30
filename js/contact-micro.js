@@ -1,18 +1,23 @@
+/* =========================================================
+   Contact — Microinteraction (play once)
+   Triggers entrance animation when the contact screen becomes active.
+   ========================================================= */
 (() => {
   const screen = document.querySelector(".contact-screen");
   if (!screen) return;
 
   const root = document.body;
-  let hasPlayed = false;
+  let played = false;
 
-  const io = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
-
-      // Pre-trigger before snap lands (prevents flash)
-      if (entry.isIntersecting && !hasPlayed) {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      /*
+        Pre-trigger before the snap lands to prevent flash
+        and ensure the animation state is applied in advance.
+      */
+      if (entry.isIntersecting && !played) {
         root.classList.add("contact-s1-active");
-        hasPlayed = true;
+        played = true;
       }
     },
     {
@@ -21,5 +26,5 @@
     }
   );
 
-  io.observe(screen);
+  observer.observe(screen);
 })();

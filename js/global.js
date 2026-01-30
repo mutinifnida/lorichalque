@@ -1,10 +1,13 @@
 /* =========================================================
-   GLOBAL JS (shared across pages)
+   GLOBAL JS
+   Shared behavior across pages
    - Header reactive state (scroll)
-   - Mobile drawer menu (open/close)
+   - Mobile drawer menu (open / close)
    ========================================================= */
 
-/* ---------- Header: reactive blur state ---------- */
+/* =========================================================
+   Header — reactive state on scroll
+   ========================================================= */
 (() => {
   const header = document.querySelector(".site-header");
   if (!header) return;
@@ -17,7 +20,9 @@
   window.addEventListener("scroll", onScroll, { passive: true });
 })();
 
-/* ---------- Mobile drawer menu ---------- */
+/* =========================================================
+   Mobile drawer menu
+   ========================================================= */
 (() => {
   const toggleBtn = document.querySelector(".menu-toggle");
   const drawer = document.getElementById("mobileMenu");
@@ -29,9 +34,6 @@
     toggleBtn.setAttribute("aria-expanded", "true");
     toggleBtn.setAttribute("aria-label", "Close menu");
     drawer.setAttribute("aria-hidden", "false");
-
-    // Optional (disabled): lock background scroll when menu is open.
-    // document.documentElement.style.overflow = "hidden";
   };
 
   const closeMenu = () => {
@@ -39,35 +41,32 @@
     toggleBtn.setAttribute("aria-expanded", "false");
     toggleBtn.setAttribute("aria-label", "Open menu");
     drawer.setAttribute("aria-hidden", "true");
-
-    // Optional (disabled): unlock background scroll.
-    // document.documentElement.style.overflow = "";
   };
 
-  /* Toggle button */
+  /* Toggle via button */
   toggleBtn.addEventListener("click", () => {
     const isOpen = document.body.classList.contains("menu-open");
-    if (isOpen) closeMenu();
-    else openMenu();
+    isOpen ? closeMenu() : openMenu();
   });
 
-  /* Close when clicking the overlay (outside the panel) */
+  /* Close when clicking outside the drawer panel */
   drawer.addEventListener("click", (e) => {
     if (e.target === drawer) closeMenu();
   });
 
-  /* Close when clicking a nav link */
+  /* Close when clicking a navigation link */
   drawer.addEventListener("click", (e) => {
-    const target = e.target;
-    if (target instanceof HTMLAnchorElement) closeMenu();
+    if (e.target instanceof HTMLAnchorElement) {
+      closeMenu();
+    }
   });
 
-  /* Close on Escape */
+  /* Close on Escape key */
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeMenu();
   });
 
-  /* Prevent edge case: if user resizes to desktop while menu is open */
+  /* Safety: close menu if viewport switches to desktop */
   window.addEventListener("resize", () => {
     if (window.innerWidth >= 768 && document.body.classList.contains("menu-open")) {
       closeMenu();

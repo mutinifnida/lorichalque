@@ -1,10 +1,14 @@
+/* =========================================================
+   Home — Header theme by section
+   Applies header color variables based on the active snap section.
+   ========================================================= */
 (() => {
   const sections = Array.from(document.querySelectorAll(".snap-section"));
   if (!sections.length) return;
 
   const root = document.body;
 
-  // Stores the last "section theme" so we can restore after menu closes
+  /* Last applied section theme (used to restore after menu closes) */
   let lastTheme = {
     brand: null,
     nav: null,
@@ -12,14 +16,14 @@
     navBg: null
   };
 
-  const setVars = (theme) => {
-    if (theme.brand) root.style.setProperty("--brand-color", theme.brand);
-    if (theme.nav) root.style.setProperty("--nav-color", theme.nav);
-    if (theme.navHover) root.style.setProperty("--nav-hover-color", theme.navHover);
-    if (theme.navBg) root.style.setProperty("--nav-hover-bg", theme.navBg);
+  const setVars = ({ brand, nav, navHover, navBg }) => {
+    if (brand) root.style.setProperty("--brand-color", brand);
+    if (nav) root.style.setProperty("--nav-color", nav);
+    if (navHover) root.style.setProperty("--nav-hover-color", navHover);
+    if (navBg) root.style.setProperty("--nav-hover-bg", navBg);
   };
 
-  const readThemeFrom = (el) => ({
+  const readTheme = (el) => ({
     brand: el.dataset.brand || null,
     nav: el.dataset.nav || null,
     navHover: el.dataset.navHover || null,
@@ -27,41 +31,45 @@
   });
 
   const applySectionTheme = (el) => {
-    lastTheme = readThemeFrom(el);
-    // If the menu is open, keep the forced theme
+    lastTheme = readTheme(el);
+
+    /* If the mobile drawer is open, keep the forced menu theme */
     if (root.classList.contains("menu-open")) return;
+
     setVars(lastTheme);
   };
 
-  const applyMenuOpenTheme = () => {
-    // Force a visible theme for the dark drawer
+  const applyMenuTheme = () => {
     root.style.setProperty("--brand-color", "#e3e3e3");
     root.style.setProperty("--nav-color", "#e3e3e3");
     root.style.setProperty("--nav-hover-color", "#e3e3e3");
   };
 
-  // Initial apply (first section)
+  /* Initial state: first section */
   applySectionTheme(sections[0]);
 
-  const io = new IntersectionObserver(
+  /* Observe visible section */
+  const observer = new IntersectionObserver(
     (entries) => {
-      const visible = entries
+      const active = entries
         .filter((e) => e.isIntersecting)
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-      if (visible?.target) applySectionTheme(visible.target);
+      if (active?.target) applySectionTheme(active.target);
     },
     { threshold: [0.55, 0.7, 0.85] }
   );
 
-  sections.forEach((s) => io.observe(s));
+  sections.forEach((section) => observer.observe(section));
 
-  // Observe body class changes (menu-open toggles)
-  const mo = new MutationObserver(() => {
-    const isOpen = root.classList.contains("menu-open");
-    if (isOpen) applyMenuOpenTheme();
-    else setVars(lastTheme);
+  /* React to menu open / close */
+  const mutation = new MutationObserver(() => {
+    const menuOpen = root.classList.contains("menu-open");
+    menuOpen ? applyMenuTheme() : setVars(lastTheme);
   });
 
-  mo.observe(root, { attributes: true, attributeFilter: ["class"] });
+  mutation.observe(root, {
+    attributes: true,
+    attributeFilter: ["class"]
+  });
 })();
