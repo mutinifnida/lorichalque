@@ -424,6 +424,14 @@ a {
   }
 }
 
+@media (max-width: 767px) {
+  .nav--drawer a.is-current,
+  .nav--drawer a[aria-current="page"] {
+    color: #e2360e;
+    font-weight: 700;
+  }
+}
+
 /* Mobile behavior */
 @media (max-width: 767px) {
   /* Header layout */
