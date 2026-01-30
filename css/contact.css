@@ -76,11 +76,6 @@ body {
   letter-spacing: -0.01em;
 }
 
-.contact-email {
-  margin: 10px 0 0;
-  color: #e2360e;
-}
-
 .contact-email-link {
   color: #e2360e;
   font-weight: 600;
@@ -91,13 +86,49 @@ body {
   line-height: 1.2;
 }
 
+/* New: contact links block (email + LinkedIn) */
+.contact-links {
+  margin: 10px 0 0;
+  display: grid;
+  gap: 10px;
+}
+
+/* Each line must be a single row with no wrapping */
+.contact-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 8px;
+  white-space: nowrap; /* requisito: sem quebra */
+}
+
+.contact-label {
+  font-weight: 600; /* mesmo “bold” do email atual */
+  color: #121113; /* preto */
+}
+
+/* Reuse current styling (orange + bold) */
+.contact-email-link {
+  color: #e2360e;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.contact-email-link:hover {
+  text-decoration: underline;
+}
+
 /* Mobile: centered hero copy */
 @media (max-width: 899px) {
   .contact-title,
-  .contact-email,
+  .contact-line,
   .contact-email-link,
   .contact-text {
     text-align: center;
+  }
+
+  .contact-line {
+    justify-content: center; /* centraliza as linhas inteiras */
   }
 
   .contact-text {
@@ -200,7 +231,7 @@ body {
   }
 
   .contact-title,
-  .contact-email,
+  .contact-line,
   .contact-text {
     text-align: left;
   }
@@ -230,8 +261,8 @@ body {
 
 /* Default state */
 .contact-left .contact-title,
-.contact-left .contact-email,
 .contact-left .contact-text,
+.contact-left .contact-line,
 .contact-right .contact-form {
   opacity: 1;
   transform: none;
@@ -239,8 +270,8 @@ body {
 
 /* Animate on activation */
 body.contact-s1-active .contact-left .contact-title,
-body.contact-s1-active .contact-left .contact-email,
 body.contact-s1-active .contact-left .contact-text,
+body.contact-s1-active .contact-left .contact-line,
 body.contact-s1-active .contact-right .contact-form {
   opacity: 0;
   transform: translateY(10px);
@@ -251,11 +282,11 @@ body.contact-s1-active .contact-left .contact-title {
   animation-delay: 120ms;
 }
 
-body.contact-s1-active .contact-left .contact-email {
+body.contact-s1-active .contact-left .contact-text {
   animation-delay: 320ms;
 }
 
-body.contact-s1-active .contact-left .contact-text {
+body.contact-s1-active .contact-left .contact-line {
   animation-delay: 520ms;
 }
 
@@ -266,8 +297,8 @@ body.contact-s1-active .contact-right .contact-form {
 /* Prevent 1-frame flash on mobile before IO triggers */
 @media (max-width: 899px) {
   body:not(.contact-s1-active) .contact-left .contact-title,
-  body:not(.contact-s1-active) .contact-left .contact-email,
   body:not(.contact-s1-active) .contact-left .contact-text,
+  body:not(.contact-s1-active) .contact-left .contact-line,
   body:not(.contact-s1-active) .contact-right .contact-form {
     opacity: 0;
     transform: translateY(10px);
@@ -277,8 +308,8 @@ body.contact-s1-active .contact-right .contact-form {
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   body.contact-s1-active .contact-left .contact-title,
-  body.contact-s1-active .contact-left .contact-email,
   body.contact-s1-active .contact-left .contact-text,
+  body.contact-s1-active .contact-left .contact-line,
   body.contact-s1-active .contact-right .contact-form {
     animation: none;
     opacity: 1;
@@ -287,8 +318,8 @@ body.contact-s1-active .contact-right .contact-form {
 
   @media (max-width: 899px) {
     body:not(.contact-s1-active) .contact-left .contact-title,
-    body:not(.contact-s1-active) .contact-left .contact-email,
     body:not(.contact-s1-active) .contact-left .contact-text,
+    body:not(.contact-s1-active) .contact-left .contact-line,
     body:not(.contact-s1-active) .contact-right .contact-form {
       opacity: 1;
       transform: none;
