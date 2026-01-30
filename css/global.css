@@ -561,7 +561,7 @@ a {
   .drawer-crystal {
     position: absolute;
     left: 50%;
-    bottom: 18px;
+    bottom: 10vh;
     transform: translateX(-50%);
 
     width: 110px;
