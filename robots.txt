@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lorichalque.com/sitemap.xml
