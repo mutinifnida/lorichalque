@@ -72,7 +72,8 @@ body {
 .hero-title {
   margin: 0;
   color: #121113;
-  font-size: clamp(48px, 7vw, 92px);
+  margin-top: 2vh;
+  font-size: clamp(48px, 7vw, 80px);
   letter-spacing: 0.01em;
   line-height: 1.2;
   max-width: 18ch;
@@ -143,13 +144,14 @@ body {
 
 .milestone {
   position: relative;
+  margin-top: 2vh;
   overflow: hidden;
-  padding: 14px 0;
+  padding: 10px 0;
   cursor: pointer;
 }
 
 .milestone-title {
-  margin: 0 0 8px;
+  margin: 0 0 4px;
   color: #e3e3e3;
   font-size: clamp(38px, 6vw, 68px);
   letter-spacing: 0.01em;
@@ -266,9 +268,9 @@ body.home-s2-active .section-2 .milestone:nth-child(4)::before {
   margin: 0;
   color: #e2360e;
   max-width: 24ch;
-  font-size: clamp(48px, 7vw, 92px);
+  font-size: clamp(48px, 7vw, 70px);
   letter-spacing: 0.01em;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .diff-text {
